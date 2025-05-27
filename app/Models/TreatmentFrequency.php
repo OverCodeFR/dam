@@ -26,3 +26,4 @@ class TreatmentFrequency extends Model
         return $this->hasMany(Treatment::class);
     }
 }
+//test
