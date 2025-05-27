@@ -16,15 +16,7 @@ class Treatment extends Model
         'dosage',
         'start_at',
         'end_at',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        //
+        'patient_id',
     ];
 
     /**

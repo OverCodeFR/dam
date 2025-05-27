@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Stock extends Model
@@ -16,8 +17,8 @@ class Stock extends Model
         'amount',
     ];
 
-    protected function treatments(): HasMany
+    protected function treatment(): BelongsTo
     {
-        return $this->hasMany(Treatment::class);
+        return $this->belongsTo(Treatment::class);
     }
 }

@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class TreatmentFrequency extends Model
+class TreatmentFrequency extends Pivot
 {
+    public $primaryKey = ['treatment_id', 'frequency_id'];
+    public $incrementing = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,13 +19,13 @@ class TreatmentFrequency extends Model
         'amount',
     ];
 
-    protected function frequencies(): HasMany
+    protected function frequency(): BelongsTo
     {
-        return $this->hasMany(Frequency::class);
+        return $this->belongsTo(Frequency::class);
     }
 
-    protected function treatments(): HasMany
+    protected function treatment(): BelongsTo
     {
-        return $this->hasMany(Treatment::class);
+        return $this->belongsTo(Treatment::class);
     }
 }
