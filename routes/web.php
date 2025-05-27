@@ -7,11 +7,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
+    Route::resource('patients', \App\Http\Controllers\PatientController::class);
     Route::redirect('settings', 'settings/profile');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');

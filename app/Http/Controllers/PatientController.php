@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Patient;
 
 class PatientController extends Controller
 {
@@ -9,8 +10,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
-        return view('dashboard.index',compact(['items']));
+        $patients = Patient::all();
+        return view('patients.index',compact(['patients']));
     }
 
     /**

@@ -37,6 +37,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             ]);
         }
 
+
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
