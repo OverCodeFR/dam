@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('frequencies', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id()->primary();
             $table->string('moment_day');
         });
     }

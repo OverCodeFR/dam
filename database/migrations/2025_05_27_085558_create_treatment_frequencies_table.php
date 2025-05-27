@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('treatment_frequencies', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id()->primary();
             $table->integer('amount');
             $table->foreignIdFor(Frequency::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Treatment::class)->constrained()->cascadeOnDelete();

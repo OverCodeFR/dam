@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('treatments', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id()->primary();
             $table->string('name');
             $table->float('dosage');
             $table->date('start_at');

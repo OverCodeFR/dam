@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Frequency extends Model
 {
@@ -14,6 +15,11 @@ class Frequency extends Model
     protected $fillable = [
         'moment_day',
     ];
+
+    public function treatment(): BelongsTo
+    {
+        return $this->belongsTo(Treatment::class);
+    }
 
 
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Treatment extends Model
 {
@@ -30,5 +31,10 @@ class Treatment extends Model
             'start_at' => 'date',
             'end_at' => 'date',
         ];
+    }
+
+    public function patient(): BelongsTo
+    {
+        return $this->belongsTo(Patient::class);
     }
 }
