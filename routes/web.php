@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use \App\Http\Controllers\PatientController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,8 +15,9 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function () {
     //Patients
-    Route::resource('patients', \App\Http\Controllers\PatientController::class);
-    Route::resource('patients/add', [\App\Http\Controllers\TreatmentController::class, 'add'])->name('patients.add');
+    Route::resource('patients', PatientController::class);
+    Route::get('/patients/create', [PatientController::class, 'create'])->name('patients.create');
+    Route::post('/patients/store', [PatientController::class, 'store'])->name('patients.store');
 
     //Treatments
     Route::get('/patients/{id}/treatments', [\App\Http\Controllers\TreatmentController::class, 'index'])->name('patients.treatments');

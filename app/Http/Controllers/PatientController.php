@@ -19,18 +19,18 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('patients.add');
+        return view('patients.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePatientRequest $request)
+    public function store()//StorePatientRequest $request)
     {
-        $item = new Item();
-        $item->text = $request->validated('text');
-        $item->save();
-        return redirect()->route('dashboard');
+//        $patient = new Patient();
+        $patient = $_POST;
+        $patient->save();
+        return redirect()->route('patients.index');
     }
 
     /**
