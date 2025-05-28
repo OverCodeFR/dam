@@ -29,7 +29,7 @@ class PatientController extends Controller
     public function store(StorePatientRequest $request)
     {
         $patient = new Patient();
-        $patient->fill($request->all());
+        $patient->fill($request->validated());
         $patient->save();
         return redirect()->route('patients.index');
     }
