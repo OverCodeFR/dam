@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\StorePatientRequest;
 use App\Models\Patient;
 
 class PatientController extends Controller
@@ -10,7 +11,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patients = Patient::all();
+        $patients = Patient::paginate(10);
         return view('patients.index',compact(['patients']));
     }
 
@@ -25,10 +26,10 @@ class PatientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()//StorePatientRequest $request)
+    public function store(StorePatientRequest $request)
     {
-//        $patient = new Patient();
-        $patient = $_POST;
+        $patient = new Patient();
+        $patient->fill($request->all());
         $patient->save();
         return redirect()->route('patients.index');
     }
