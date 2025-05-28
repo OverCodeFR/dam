@@ -18,7 +18,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('patients', PatientController::class);
     Route::get('/patients/create', [PatientController::class, 'create'])->name('patients.create');
 
-
     //Treatments
     Route::get('/patients/{id}/treatments', [\App\Http\Controllers\TreatmentController::class, 'index'])->name('patients.treatments');
 

@@ -1,5 +1,5 @@
 <x-layouts.app>
-    <form class="bg-gray-200 p-6 rounded-md shadow-sm" method="PUT" action="{{ route('patients.store') }}">
+    <form class="bg-gray-200 p-6 rounded-md shadow-sm" action="{{ route('patients.store') }}" method="post">
         @csrf
         <div class="space-y-12">
             <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
@@ -44,8 +44,7 @@
 {{--               class="text-sm/6 font-semibold text-gray-900">--}}
 {{--                Cancel--}}
 {{--            </a>--}}
-            <button class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type="submit">Ajouter le patient</button>
-        </div>
+            <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
         </div>
     </form>
 </x-layouts.app>
