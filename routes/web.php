@@ -13,9 +13,15 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
+    //Patients
     Route::resource('patients', \App\Http\Controllers\PatientController::class);
-    Route::redirect('settings', 'settings/profile');
+    Route::resource('patients/add', [\App\Http\Controllers\TreatmentController::class, 'add'])->name('patients.add');
 
+    //Treatments
+    Route::get('/patients/{id}/treatments', [\App\Http\Controllers\TreatmentController::class, 'index'])->name('patients.treatments');
+
+    //Settings
+    Route::redirect('settings', 'settings/profile');
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');

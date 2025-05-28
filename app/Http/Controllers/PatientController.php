@@ -19,13 +19,13 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return view('patients.add');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreItemRequest $request)
+    public function store(StorePatientRequest $request)
     {
         $item = new Item();
         $item->text = $request->validated('text');
@@ -36,7 +36,7 @@ class PatientController extends Controller
     /**
      *
      */
-    public function check(UpdateItemRequest $request, $id)
+    public function check(UpdatePatientRequest $request, $id)
     {
         $item = Item::findOrFail($id);
         $item->done = $request->has('done');
@@ -47,7 +47,7 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Item $item)
+    public function show(Patient $patient)
     {
         //
     }
@@ -55,7 +55,7 @@ class PatientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Item $item)
+    public function edit(Patient $item)
     {
         //
     }
@@ -63,7 +63,7 @@ class PatientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateItemRequest $request, Item $item)
+    public function update(UpdatePatientRequest $request, Patient $item)
     {
         //
     }
@@ -73,7 +73,7 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        $item = Item::findOrFail($id);
+        $item = Patient::findOrFail($id);
         $item->delete();
         return redirect()->back();
     }
