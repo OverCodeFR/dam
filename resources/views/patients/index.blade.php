@@ -30,20 +30,20 @@
                                 </tr>
                                 </thead>
                                 @foreach($patients as $patient)
-                                    <tbody class="divide-y divide-gray-200 bg-white">
-                                    <tr>
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$patient->name}}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->phone}}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->address}}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->email}}</td>
-                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
+                                <tbody class="divide-y divide-gray-200 bg-white">
+                                <tr>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$patient->name}}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->phone}}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->address}}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->email}}</td>
+                                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
+                                    </td>
+                                </tr>
+                                @endforeach
 
-                                    <!-- More people... -->
-                                    </tbody>
+                                <!-- More people... -->
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -53,3 +53,4 @@
 
 
     </div></x-layouts.app>
+
