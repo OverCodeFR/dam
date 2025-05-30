@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use \App\Http\Controllers\PatientController;
@@ -16,6 +17,7 @@ Route::view('dashboard', 'dashboard')
 Route::middleware(['auth'])->group(function () {
     //Patients
     Route::resource('patients', PatientController::class);
+    Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
     Route::get('/patients/create', [PatientController::class, 'create'])->name('patients.create');
 
     //Treatments
