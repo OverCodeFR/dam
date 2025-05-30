@@ -40,7 +40,7 @@
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->address}}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->email}}</td>
                                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -53,18 +53,13 @@
                                 </div>
                                 <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                                     <div class="text-sm text-gray-700">
-                                        Affichage
-                                        <span class="font-medium">{{ $patients->firstItem() }}</span>
-                                        à
-                                        <span class="font-medium">{{ $patients->lastItem() }}</span>
-                                        sur
-                                        <span class="font-medium">{{ $patients->total() }}</span>
-                                        résultats
+                                        Affichage de {{ $patients->firstItem() }} à {{ $patients->lastItem() }} sur {{ $patients->total() }} résultats
                                     </div>
                                     <div>
                                         {{ $patients->links('pagination::tailwind') }}
                                     </div>
                                 </div>
+
 
                             </div>
 
