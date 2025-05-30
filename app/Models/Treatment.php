@@ -20,6 +20,7 @@ class Treatment extends Model
         'patient_id',
     ];
 
+    public $timestamps = false;
 
     /**
      * Get the attributes that should be cast.
