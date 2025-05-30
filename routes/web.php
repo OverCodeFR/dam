@@ -22,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Treatments
     Route::get('/treatments', [TreatmentController::class, 'index'])->name('treatments.index');
-    Route::get('/patients/{id}/treatments', [TreatmentController::class, 'index'])->name('patients.treatments');
+    Route::get('/patients/{id}/treatments', [TreatmentController::class, 'treatment'])->name('patients.treatments');
     Route::get('/patients/{id}/treatments/create', [TreatmentController::class, 'create'])->name('patients.treatments.create');
     Route::post('/patients/treatments/store', [TreatmentController::class, 'store'])->name('patients.treatments.store');
 

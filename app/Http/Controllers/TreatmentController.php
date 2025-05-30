@@ -14,7 +14,23 @@ class TreatmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, $id)
+    public function index(Request $request)
+    {
+        $search = $request->query('search');
+
+        $treatments = Treatment::when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('dosage', 'like', '%' . $search . '%')
+                    ->orWhere('start_at', 'like', '%' . $search . '%')
+                    ->orWhere('end_at', 'like', '%' . $search . '%');
+            });
+        })->paginate(10);
+
+        return view('treatments.index', compact('treatments'));
+    }
+
+    public function treatment(Request $request, $id)
     {
         $patient = Patient::findOrFail($id);
 
@@ -34,6 +50,15 @@ class TreatmentController extends Controller
             ->paginate(10);
 
         return view('treatments.index', compact('patient', 'treatments'));
+    }
+
+    private function convertDateFrToEn($input) //IA
+    {
+        if (preg_match('/^(\d{2})\/(\d{2})\/(\d{4})$/', $input, $matches)) {
+            return $matches[3] . '-' . $matches[2] . '-' . $matches[1]; // yyyy-mm-dd
+        }
+
+        return $input;
     }
 
     /**
