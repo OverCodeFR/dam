@@ -1,5 +1,5 @@
 <x-layouts.app>
-    <form class="bg-gray-200 p-6 rounded-md shadow-sm" method="POST" action="{{ route('patients.store') }}">
+    <form class="bg-gray-200 p-6 rounded-md shadow-sm" action="{{ route('patients.store') }}" method="post">
         @csrf
         <div class="space-y-12">
             <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">

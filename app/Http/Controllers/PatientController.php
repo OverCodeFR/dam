@@ -31,6 +31,7 @@ class PatientController extends Controller
         $patient = new Patient();
         $patient->fill($request->validated());
         $patient->save();
+
         return redirect()->route('patients.index');
     }
 
