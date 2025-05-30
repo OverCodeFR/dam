@@ -19,9 +19,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('patients', PatientController::class);
     Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
     Route::get('/patients/create', [PatientController::class, 'create'])->name('patients.create');
-
     //Treatments
-    Route::get('/patients/{id}/treatments', [\App\Http\Controllers\TreatmentController::class, 'index'])->name('patients.treatments');
+    Route::get('/treatments', [\App\Http\Controllers\TreatmentController::class, 'index'])->name('treatments.index');
 
     //Settings
     Route::redirect('settings', 'settings/profile');

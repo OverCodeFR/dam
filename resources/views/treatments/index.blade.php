@@ -1,13 +1,83 @@
-<table>
-    <tbody>
-    <tr>
-        @foreach($treatments as $treatment)
-            {{$treatment->name}}
-            {{$treatment->dosage}}
-            {{$treatment->start_at->format('d/m/Y')}}
-            {{$treatment->start_at->format('d/m/Y')}}
-            {{$treatment->patient->name}}
-        @endforeach
-    </tr>
-    </tbody>
-</table>
+<x-layouts.app>
+    <div class="container mx-auto px-4 py-6">
+        <h1 class="text-3xl font-semibold text-white-800 mb-6">
+        </h1>
+
+        <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center">
+                <div class="sm:flex-auto">
+                    <h1 class="text-base font-semibold text-gray-100">Traitements</h1>
+                    <p class="mt-2 text-sm text-gray-100">Liste de tout les traitements enregistrés</p>
+                </div>
+                <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                </div>
+            </div>
+            <div class="mt-8 flow-root">
+                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                        <form  method="GET" action="{{ route('treatments.index') }}">
+                            <label for="search" class="block text-sm/6 font-medium text-white">Recherche</label>
+                            <div class="mt-2">
+                                <div class="flex rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                                    <input type="text" name="search" id="search" value="{{ request('search') }}" class="block min-w-0 grow px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6" placeholder="Rechercher...">
+                                    <div class="flex py-1.5 pr-1.5">
+                                        <kbd class="inline-flex items-center rounded border border-gray-200 px-1 font-sans text-xs text-gray-400">🔎</kbd>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="overflow-hidden shadow ring-1 ring-black/5 sm:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-200 p-6 rounded-md shadow-sm">
+                            <tr>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Nom</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dosage</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date de début</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date de fin</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Modifier</th>
+                            </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                            @foreach($treatments as $treatment)
+                                <tr>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$treatment->name}}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$treatment->dosage}}g</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{ $treatment->start_at ? $treatment->start_at->format('d/m/Y') : '—' }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{ $treatment->start_at ? $treatment->start_at->format('d/m/Y') : '—' }}
+                                    </td>
+                                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-sm font-medium sm:pr-6">
+                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+
+                        </table>
+                        <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+                            <div class="flex flex-1 justify-between sm:hidden">
+                                {{ $treatments->links('pagination::simple-tailwind') }}
+                            </div>
+                            <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                                <div class="text-sm text-gray-700">
+                                    Affichage de {{ $treatments->firstItem() }} à {{ $treatments->lastItem() }} sur {{ $treatments->total() }} résultats
+                                </div>
+                                <div>
+                                    {{ $treatments->links('pagination::tailwind') }}
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-layouts.app>
+

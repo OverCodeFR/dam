@@ -20,6 +20,7 @@ class Treatment extends Model
         'patient_id',
     ];
 
+
     /**
      * Get the attributes that should be cast.
      *

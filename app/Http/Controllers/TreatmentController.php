@@ -1,19 +1,30 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\StoreTreatmentRequest;
 use App\Models\Treatment;
 use App\Models\Patient;
+use Illuminate\Http\Request;
 
 class TreatmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index(Request $request)
     {
-        $patient = Patient::findOrFail($id);
-        $treatments = Treatment::where('patient_id', $patient->id)->get();
-        return view('treatments.index',compact('patient','treatments'));
+        $search = $request->query('search');
+
+        $treatments = Treatment::when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('dosage', 'like', '%' . $search . '%')
+                    ->orWhere('start_at', 'like', '%' . $search . '%')
+                    ->orWhere('end_at', 'like', '%' . $search . '%');
+            });
+        })->paginate(10);
+
+        return view('treatments.index', compact('treatments'));
     }
 
     /**
@@ -21,19 +32,17 @@ class TreatmentController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreItemRequest $request)
+    public function store(StoreTreatmentRequest $request)
     {
-        $item = new Item();
-        $item->text = $request->validated('text');
-        $item->save();
-        return redirect()->route('dashboard');
+
     }
+
 
     /**
      *
