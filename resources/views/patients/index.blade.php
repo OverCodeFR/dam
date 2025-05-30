@@ -19,6 +19,19 @@
             <div class="mt-8 flow-root">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                        <form  method="GET" action="{{ route('patients.index') }}">
+                            <label for="search" class="block text-sm/6 font-medium text-white">Recherche</label>
+                            <div class="mt-2">
+                                <div class="flex rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                                    <input type="text" name="search" id="search" value="{{ request('search') }}" class="block min-w-0 grow px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6" placeholder="Rechercher...">
+                                    <div class="flex py-1.5 pr-1.5">
+                                        <kbd class="inline-flex items-center rounded border border-gray-200 px-1 font-sans text-xs text-gray-400">🔎</kbd>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
                         <div class="overflow-hidden shadow ring-1 ring-black/5 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-300">
                                 <thead class="bg-gray-200 p-6 rounded-md shadow-sm">
@@ -27,9 +40,7 @@
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Téléphone</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Adresse</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
-                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                        <span class="sr-only">Modifier</span>
-                                    </th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Modifier</th>
                                 </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 bg-white">

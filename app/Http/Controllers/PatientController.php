@@ -3,16 +3,27 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\StorePatientRequest;
 use App\Models\Patient;
+use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $patients = Patient::paginate(10);
-        return view('patients.index',compact(['patients']));
+        $search = $request->query('search');
+
+        $patients = Patient::when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('phone', 'like', '%' . $search . '%')
+                    ->orWhere('address', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        })->paginate(10);
+
+        return view('patients.index', compact('patients'));
     }
 
     /**
