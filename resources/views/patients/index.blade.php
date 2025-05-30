@@ -7,7 +7,7 @@
             <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
                     <h1 class="text-base font-semibold text-gray-100">Patients</h1>
-                    <p class="mt-2 text-sm text-gray-100">Liste de tout les patients enregistrés</p>
+                    <p class="mt-2 text-sm text-gray-100">Liste de tous les patients enregistrés</p>
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                     <a href="{{ route('patients.create') }}"
@@ -19,8 +19,7 @@
             <div class="mt-8 flow-root">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                        <form  method="GET" action="{{ route('patients.index') }}">
-                            <label for="search" class="block text-sm/6 font-medium text-white">Recherche</label>
+                        <form  method="GET" action="{{ route('patients.index') }}" class="">
                             <div class="mt-2">
                                 <div class="flex rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                                     <input type="text" name="search" id="search" value="{{ request('search') }}" class="block min-w-0 grow px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6" placeholder="Rechercher...">
@@ -40,17 +39,21 @@
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Téléphone</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Adresse</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Modifier</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 bg-white">
                                 @foreach($patients as $patient)
                                     <tr>
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$patient->name}}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->name}}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->phone}}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->address}}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$patient->email}}</td>
-                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-sm font-medium sm:pr-6">
+                                            <a href="{{ route('patients.treatments', ['id' => $patient->id]) }}"
+                                               class="text-indigo-600 hover:text-indigo-900">
+                                                Traitements
+                                            </a><br>
                                             <a href="#" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
                                         </td>
                                     </tr>
@@ -81,5 +84,6 @@
         </div>
 
 
-    </div></x-layouts.app>
+    </div>
+</x-layouts.app>
 
