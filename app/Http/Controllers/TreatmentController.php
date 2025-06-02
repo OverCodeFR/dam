@@ -49,7 +49,7 @@ class TreatmentController extends Controller
         $treatment->fill($request->validated());
         $treatment->save();
 
-        return redirect()->back();//route('patients.index');
+        return redirect()->route('patients.index');
     }
 
 //    /**
