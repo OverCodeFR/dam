@@ -7,10 +7,10 @@
             <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
                     <h1 class="text-base font-semibold text-gray-100">Traitements</h1>
-                    <p class="mt-2 text-sm text-gray-100">Liste de tous les traitements du patient</p>
+                    <p class="mt-2 text-sm text-gray-100">Liste de tout les traitements enregistrés</p>
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                    <a href="{{ route('patients.treatments.create', ['id' => $patient->id]) }}"
+                    <a href="{{ route('treatments.create') }}"
                        class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         Ajouter un traitement
                     </a>
@@ -19,7 +19,8 @@
             <div class="mt-8 flow-root">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                        <form  method="GET" action="{{ route('patients.treatments', ['id' => $patient->id]) }}" class="">
+                        <form  method="GET" action="{{ route('treatments.index') }}">
+                            <label for="search" class="block text-sm/6 font-medium text-white">Recherche</label>
                             <div class="mt-2">
                                 <div class="flex rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                                     <input type="text" name="search" id="search" value="{{ request('search') }}" class="block min-w-0 grow px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6" placeholder="Rechercher...">
@@ -39,16 +40,22 @@
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dosage</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date de début</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date de fin</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Actions</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Patient</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Modifier</th>
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
                             @foreach($treatments as $treatment)
                                 <tr>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$treatment->name}}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$treatment->dosage}}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$treatment->start_at->format('d/m/Y')}}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$treatment->end_at->format('d/m/Y')}}</td>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$treatment->name}}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$treatment->dosage}}g</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{ $treatment->start_at ? $treatment->start_at->format('d/m/Y') : '—' }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{ $treatment->start_at ? $treatment->start_at->format('d/m/Y') : '—' }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->patient->name }}</td>
                                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-sm font-medium sm:pr-6">
                                         <a href="#" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
                                     </td>
@@ -69,14 +76,13 @@
                                     {{ $treatments->links('pagination::tailwind') }}
                                 </div>
                             </div>
+
+
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
     </div>
 </x-layouts.app>

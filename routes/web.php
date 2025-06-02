@@ -17,14 +17,10 @@ Route::view('dashboard', 'dashboard')
 Route::middleware(['auth'])->group(function () {
     //Patients
     Route::resource('patients', PatientController::class);
-    Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
-    Route::get('/patients/create', [PatientController::class, 'create'])->name('patients.create');
 
     //Treatments
-    Route::get('/treatments', [TreatmentController::class, 'index'])->name('treatments.index');
-    Route::get('/patients/{id}/treatments', [TreatmentController::class, 'treatment'])->name('patients.treatments');
-    Route::get('/patients/{id}/treatments/create', [TreatmentController::class, 'create'])->name('patients.treatments.create');
-    Route::post('/patients/treatments/store', [TreatmentController::class, 'store'])->name('patients.treatments.store');
+    Route::resource('treatments', TreatmentController::class)->except('index', 'show', 'store');
+    Route::get('/treatments/{patient?}', [TreatmentController::class, 'index'])->name('treatments.index');
 
     //Settings
     Route::redirect('settings', 'settings/profile');
