@@ -45,17 +45,6 @@ class TreatmentController extends Controller
 
 
     /**
-     *
-     */
-    public function check(UpdateItemRequest $request, $id)
-    {
-        $item = Item::findOrFail($id);
-        $item->done = $request->has('done');
-        $item->save();
-        return redirect()->back();
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Item $item)
