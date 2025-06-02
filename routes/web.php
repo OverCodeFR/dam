@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use \App\Http\Controllers\PatientController;
+use \App\Http\Controllers\TreatmentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,8 +19,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('patients', PatientController::class);
     Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
     Route::get('/patients/create', [PatientController::class, 'create'])->name('patients.create');
+
     //Treatments
-    Route::get('/treatments', [\App\Http\Controllers\TreatmentController::class, 'index'])->name('treatments.index');
+    Route::get('/treatments', [TreatmentController::class, 'index'])->name('treatments.index');
+    Route::get('/patients/{id}/treatments', [TreatmentController::class, 'treatment'])->name('patients.treatments');
+    Route::get('/patients/{id}/treatments/create', [TreatmentController::class, 'create'])->name('patients.treatments.create');
+    Route::post('/patients/treatments/store', [TreatmentController::class, 'store'])->name('patients.treatments.store');
 
     //Settings
     Route::redirect('settings', 'settings/profile');
