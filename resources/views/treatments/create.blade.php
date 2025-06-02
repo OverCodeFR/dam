@@ -1,5 +1,5 @@
 <x-layouts.app>
-    <form class="bg-gray-200 p-6 rounded-md shadow-sm" action="{{ route('patients.treatments.store') }}" method="POST">
+    <form class="bg-gray-200 p-6 rounded-md shadow-sm" action="{{ route('treatments.store') }}" method="POST">
         @csrf
         <div class="space-y-12">
             <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
@@ -42,7 +42,7 @@
             </div>
 
             <div class="mt-6 flex items-center justify-end gap-x-6">
-                            <a href="{{ route('patients.treatments', ['id' => $patient->id]) }}"
+                            <a href="{{ route('patients.index', ['id' => $patient->id]) }}"
                                class="text-sm/6 font-semibold text-gray-900">
                                 Cancel
                             </a>
