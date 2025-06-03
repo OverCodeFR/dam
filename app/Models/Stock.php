@@ -17,7 +17,7 @@ class Stock extends Model
         'amount',
     ];
 
-    protected function treatment(): BelongsTo
+    public function treatment(): BelongsTo
     {
         return $this->belongsTo(Treatment::class);
     }

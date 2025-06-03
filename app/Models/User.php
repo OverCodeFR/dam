@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -60,8 +61,8 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    protected function role(): HasMany
+    public function role(): BelongsTo
     {
-        return $this->hasMany(Role::class);
+        return $this->belongsTo(Role::class);
     }
 }

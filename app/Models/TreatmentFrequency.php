@@ -19,12 +19,12 @@ class TreatmentFrequency extends Pivot
         'amount',
     ];
 
-    protected function frequency(): BelongsTo
+    public function frequency(): BelongsTo
     {
         return $this->belongsTo(Frequency::class);
     }
 
-    protected function treatment(): BelongsTo
+    public function treatment(): BelongsTo
     {
         return $this->belongsTo(Treatment::class);
     }
