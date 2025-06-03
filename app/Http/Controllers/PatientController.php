@@ -14,7 +14,8 @@ class PatientController extends Controller
      */
     public function index(Request $request)
     {
-//        auth()->user()->can('viewAny');
+        Gate::authorize('viewAny', Patient::class);
+
         $user_id = Auth::id();
 
         $search = $request->query('search');

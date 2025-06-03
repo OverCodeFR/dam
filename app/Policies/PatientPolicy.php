@@ -4,16 +4,10 @@ namespace App\Policies;
 
 use App\Models\Patient;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Auth\Access\Response;
 
 class PatientPolicy
 {
-//    public function before(User $user, $ability):bool
-//    {
-//        return true;
-//    }
-
     /**
      * Determine whether the user can view any models.
      */
@@ -54,19 +48,19 @@ class PatientPolicy
         return false;
     }
 
-//    /**
-//     * Determine whether the user can restore the model.
-//     */
-//    public function restore(User $user, Patient $patient): bool
-//    {
-//        return false;
-//    }
+    /**
+     * Determine whether the user can restore the model.
+     */
+    public function restore(User $user, Patient $patient): bool
+    {
+        return false;
+    }
 
-//    /**
-//     * Determine whether the user can permanently delete the model.
-//     */
-//    public function forceDelete(User $user, Patient $patient): bool
-//    {
-//        return false;
-//    }
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, Patient $patient): bool
+    {
+        return false;
+    }
 }
