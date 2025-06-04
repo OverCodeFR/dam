@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePatientRequest;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PatientController extends Controller
 {
@@ -12,16 +14,23 @@ class PatientController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('viewAny', Patient::class);
+
+        $user_id = Auth::id();
+
         $search = $request->query('search');
 
-        $patients = Patient::when($search, function ($query, $search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('phone', 'like', '%' . $search . '%')
-                    ->orWhere('address', 'like', '%' . $search . '%')
-                    ->orWhere('email', 'like', '%' . $search . '%');
-            });
-        })->paginate(10);
+        $patients = Patient::when($user_id !== 1, function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('phone', 'like', '%' . $search . '%')
+                        ->orWhere('address', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                });
+            })->paginate(10);
 
         return view('patients.index', compact('patients'));
     }

@@ -19,7 +19,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('patients', PatientController::class);
 
     //Treatments
-    Route::resource('treatments', TreatmentController::class)->except('index', 'show', 'store');
+    Route::resource('treatments', TreatmentController::class)->except('index', 'show');
     Route::get('/treatments/{patient?}', [TreatmentController::class, 'index'])->name('treatments.index');
 
     //Settings

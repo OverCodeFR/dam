@@ -17,7 +17,7 @@ class TreatmentType extends Model
         'module',
     ];
 
-    protected function treatments(): HasMany
+    public function treatments(): HasMany
     {
         return $this->hasMany(Treatment::class);
     }

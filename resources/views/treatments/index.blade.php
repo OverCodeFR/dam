@@ -8,7 +8,7 @@
             />
             <x-table.add-button
                 text="Ajouter un traitement"
-                :url="route('treatments.create')"
+                :url="route('treatments.create',['patient_id'=>$patient])"
             />
         </div>
 

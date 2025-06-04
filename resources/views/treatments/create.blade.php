@@ -1,3 +1,5 @@
+
+
 <x-layouts.app>
     <form class="bg-gray-200 p-6 rounded-md shadow-sm" action="{{ route('treatments.store') }}" method="POST">
         @csrf
@@ -37,12 +39,12 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+                    <input type="hidden" name="patient_id" value="{{ request('patient_id') }}">
                 </div>
             </div>
 
             <div class="mt-6 flex items-center justify-end gap-x-6">
-                            <a href="{{ route('patients.index', ['id' => $patient->id]) }}"
+                            <a href="{{ route('patients.index', ['id' => $patient->id])}}"
                                class="text-sm/6 font-semibold text-gray-900">
                                 Cancel
                             </a>
