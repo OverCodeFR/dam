@@ -6,6 +6,7 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class PatientController extends Controller
 {
@@ -16,12 +17,12 @@ class PatientController extends Controller
     {
         Gate::authorize('viewAny', Patient::class);
 
-        $user_id = Auth::id();
+        $user = auth()->user();
 
         $search = $request->query('search');
 
-        $patients = Patient::when($user_id !== 1, function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
+        $patients = Patient::when($user->role !== "d8bad2f9-2d24-3861-9f7a-d4a5dccfe79d", function ($query) use ($user) {
+            $query->where('user_id', $user->id);
         })
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
@@ -40,6 +41,8 @@ class PatientController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Patient::class);
+
         return view('patients.create');
     }
 
@@ -48,6 +51,8 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
+        Gate::authorize('create', Patient::class);
+
         $patient = new Patient();
         $patient->fill($request->validated());
         $patient->save();
@@ -60,10 +65,7 @@ class PatientController extends Controller
      */
     public function check(UpdatePatientRequest $request, $id)
     {
-        $item = Item::findOrFail($id);
-        $item->done = $request->has('done');
-        $item->save();
-        return redirect()->back();
+       //
     }
 
     /**

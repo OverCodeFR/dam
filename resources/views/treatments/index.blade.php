@@ -6,10 +6,18 @@
                 title="Traitements"
                 description="Liste de tous les traitements enregistrés"
             />
-            <x-table.add-button
-                text="Ajouter un traitement"
-                :url="route('treatments.create',['patient_id'=>$patient])"
-            />
+            @if (Request::is('treatments/*'))
+                <x-table.add-button
+                    text="Ajouter un traitement"
+                    :url="route('treatments.create', ['patient_id' => $patient->id])"
+                />
+            @endif
+            @if(auth()->user()->role === 'e5d2e8b5-7a40-3ed6-a7e9-00d3f87c385d')
+                <x-table.add-button
+                    text="Ajouter un traitement"
+                    :url="route('treatments.create', ['patient_id' => \App\Models\Patient::where('user_id', auth()->id())->first()->id])"
+                />
+            @endif
         </div>
 
         <x-table.search :action="route('treatments.index')" />

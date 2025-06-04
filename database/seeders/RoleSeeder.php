@@ -13,24 +13,28 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::factory()->create([
-            'name' => 'Admin',
+        Role::firstOrCreate([
             'key' => 'd8bad2f9-2d24-3861-9f7a-d4a5dccfe79d',
-            ]);
+        ], [
+            'name' => 'Admin',
+        ]);
 
-        Role::factory()->create([
-            'name' => 'User - Patient',
+        Role::firstOrCreate([
             'key' => 'e5d2e8b5-7a40-3ed6-a7e9-00d3f87c385d',
-            ]);
+        ], [
+            'name' => 'User - Patient',
+        ]);
 
-        Role::factory()->create([
-            'name' => 'Personnel soignant',
+        Role::firstOrCreate([
             'key' => '9a72061a-2116-3f33-aae6-6c992e3238e3',
-            ]);
+        ], [
+            'name' => 'Personnel soignant',
+        ]);
 
-        Role::factory()->create([
-            'name' => 'Aidant',
+        Role::firstOrCreate([
             'key' => 'fbaf263c-fd8b-3d08-931c-740fa0a1f743',
-            ]);
+        ], [
+            'name' => 'Aidant',
+        ]);
     }
 }
