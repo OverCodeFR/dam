@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\StorePatientRequest;
+use App\Http\Requests\UpdatePatientRequest;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,17 +57,6 @@ class PatientController extends Controller
     }
 
     /**
-     *
-     */
-    public function check(UpdatePatientRequest $request, $id)
-    {
-        $item = Item::findOrFail($id);
-        $item->done = $request->has('done');
-        $item->save();
-        return redirect()->back();
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Patient $patient)
@@ -77,17 +67,18 @@ class PatientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Patient $item)
+    public function edit(Patient $patient)
     {
-        //
+        return view('patients.edit', compact('patient'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePatientRequest $request, Patient $item)
+    public function update(UpdatePatientRequest $request, Patient $patient)
     {
-        //
+        $patient->update($request->validated());
+        return redirect()->route('patients.index');
     }
 
     /**
