@@ -26,7 +26,9 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $patient->email }}</td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-sm font-medium sm:pr-6">
                                     <a href="{{ route('treatments.index', ['patient' => $patient->id]) }}" class="text-indigo-600 hover:text-indigo-900">Traitements</a><br>
+                                    @cannot('update', App\Models\Patient::class)
                                     <a href="{{ route('patients.edit',['patient'=>$patient->id]) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

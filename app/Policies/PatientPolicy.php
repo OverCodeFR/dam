@@ -3,8 +3,10 @@
 namespace App\Policies;
 
 use App\Models\Patient;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
 
 class PatientPolicy
 {
@@ -13,7 +15,7 @@ class PatientPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role_id !== 2;
+        return $user->role !== 'e5d2e8b5-7a40-3ed6-a7e9-00d3f87c385d';
     }
 
     /**
@@ -29,16 +31,17 @@ class PatientPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->role !== 'fbaf263c-fd8b-3d08-931c-740fa0a1f743';
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Patient $patient): bool
-    {
-        return false;
-    }
+    //TODO
+//    public function update(User $user, Patient $patient): bool
+//    {
+//        return $user->role === 'fbaf263c-fd8b-3d08-931c-740fa0a1f743';
+//    }
 
     /**
      * Determine whether the user can delete the model.
