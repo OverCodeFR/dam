@@ -26,7 +26,7 @@
                                     {{ $treatment->start_at ? $treatment->start_at->format('d/m/Y') : '—' }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{ $treatment->start_at ? $treatment->start_at->format('d/m/Y') : '—' }}
+                                    {{ $treatment->end_at ? $treatment->end_at->format('d/m/Y') : '—' }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->patient->name }}</td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-sm font-medium sm:pr-6">

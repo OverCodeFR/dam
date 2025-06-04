@@ -20,6 +20,8 @@
 
 
             <x-form.submit-button label="Créer le patient" />
+            <x-form.cancel-button href="{{ url()->previous() }}" />
+
         </form>
     </div>
 </x-layouts.app>
