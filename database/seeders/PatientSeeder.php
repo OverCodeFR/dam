@@ -19,7 +19,7 @@ class PatientSeeder extends Seeder
             'phone' => '0751963580',
             'address' => '13 rue des Lilas',
             'email' => 'janne@example.com',
-            'user_id' => 2,
+            'user_id' => 3,
         ]);
 
         Patient::factory()->create([
@@ -36,6 +36,14 @@ class PatientSeeder extends Seeder
             'address' => '1 rue des Roseaux',
             'email' => 'sam@example.com',
             'user_id' => 4,
+        ]);
+
+        Patient::factory()->create([
+            'name' => 'Natacha',
+            'phone' => '0698476521',
+            'address' => '56 Boulevard des Primevères',
+            'email' => 'natacha@example.com',
+            'user_id' => 2,
         ]);
     }
 }
