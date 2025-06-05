@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('start_at');
             $table->date('end_at');
             $table->foreignIdFor(Patient::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\TreatmentType::class)->constrained()->cascadeOnDelete();
         });
     }
 
@@ -29,4 +30,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('treatments');
     }
+
+
 };

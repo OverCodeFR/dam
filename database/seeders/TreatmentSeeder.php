@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Treatment;
+use App\Models\TreatmentType;
+use App\TreatmentTypeModuleEnum;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,52 +15,24 @@ class TreatmentSeeder extends Seeder
      */
     public function run(): void
     {
-        Treatment::factory()->create([
-            'name ' => 'Sabril comprimé',
-            'dosage' => '500',
-            'start_at' => '2025-06-03',
-            'end_at' => '2025-06-13',
-            'patient_id' => 1,
-        ]);
+        $treatments = [
+            ['name' => 'Sabril', 'dosage' => '500', 'start_at' => '2025-06-03', 'end_at' => '2025-06-13', 'patient_id' => 1, 'treatment_type_id' => '1'],
+            ['name' => 'Palafar', 'dosage' => '300', 'start_at' => '2025-06-04', 'end_at' => '2025-06-22', 'patient_id' => 1, 'treatment_type_id' => '2'],
+            ['name' => 'Calcium', 'dosage' => '500', 'start_at' => '2025-06-05', 'end_at' => '2025-07-03', 'patient_id' => 2, 'treatment_type_id' => '3'],
+            ['name' => 'Nalcrom ', 'dosage' => '100', 'start_at' => '2025-06-01', 'end_at' => '2025-08-03', 'patient_id' => 2, 'treatment_type_id' => '4'],
+        ];
 
-        Treatment::factory()->create([
-            'name ' => 'Palafar caspusle',
-            'dosage' => '300',
-            'start_at' => '2025-06-04',
-            'end_at' => '2025-06-22',
-            'patient_id' => 1,
-        ]);
+        foreach ($treatments as $data) {
+//            $treatment_type = TreatmentType::where('module', $data['treatment_type_id']->value)->first();
 
-        Treatment::factory()->create([
-            'name ' => 'Calcium comprimé',
-            'dosage' => '500',
-            'start_at' => '2025-06-05',
-            'end_at' => '2025-07-03',
-            'patient_id' => 2,
-        ]);
-
-        Treatment::factory()->create([
-            'name ' => 'Nalcrom caspusle',
-            'dosage' => '100',
-            'start_at' => '2025-06-01',
-            'end_at' => '2025-08-03',
-            'patient_id' => 2,
-        ]);
-
-        Treatment::factory()->create([
-            'name ' => 'Gabapentin caspusle',
-            'dosage' => '100',
-            'start_at' => '2025-05-26',
-            'end_at' => '2025-06-07',
-            'patient_id' => 3,
-        ]);
-
-        Treatment::factory()->create([
-            'name ' => 'Qinlock comprimé',
-            'dosage' => '50',
-            'start_at' => '2025-06-02',
-            'end_at' => '2025-09-03',
-            'patient_id' => 3,
-        ]);
+            Treatment::factory()->create([
+                'name' => $data['name'],
+                'dosage' => $data['dosage'],
+                'start_at' => $data['start_at'],
+                'end_at' => $data['end_at'],
+                'patient_id' => $data['patient_id'],
+                'treatment_type_id' => $data['treatment_type_id'],
+            ]);
+        }
     }
 }

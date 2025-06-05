@@ -42,4 +42,9 @@ class Treatment extends Model
     {
         return $this->belongsTo(Patient::class);
     }
+
+    public function treatment_type(): BelongsTo
+    {
+        return $this->belongsTo(TreatmentType::class);
+    }
 }

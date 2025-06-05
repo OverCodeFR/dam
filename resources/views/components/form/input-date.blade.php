@@ -2,7 +2,7 @@
     use Illuminate\Support\Str;
 @endphp
 
-<div class="mb-4 w-full md:w-1/11">
+<div class="mb-4 w-full md:w-1/4">
     <label for="{{ $name }}" class="block text-sm font-medium text-gray-300 mb-1">
         {{ $label }}
     </label>
