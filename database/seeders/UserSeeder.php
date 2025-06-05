@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\RoleKeyEnum;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,32 +15,22 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Sophie',
-            'email' => 'sophie@example.com',
-            'password' => Hash::make('password'),
-            'role' => RoleKeyEnum::Admin,
-        ]);
+        $users = [
+            ['name' => 'Sophie', 'email' => 'sophie@example.com', 'role' => RoleKeyEnum::Admin],
+            ['name' => 'Natacha', 'email' => 'natacha@example.com', 'role' => RoleKeyEnum::patient],
+            ['name' => 'Didier', 'email' => 'didier@example.com', 'role' => RoleKeyEnum::patient],
+            ['name' => 'Marcel', 'email' => 'marcel@example.com', 'role' => RoleKeyEnum::Helper],
+        ];
 
-        User::factory()->create([
-            'name' => 'Natacha',
-            'email' => 'natacha@example.com',
-            'password' => Hash::make('password'),
-            'role' => RoleKeyEnum::patient,
-        ]);
+        foreach ($users as $data) {
+            $role = Role::where('key', $data['role']->value)->first();
 
-        User::factory()->create([
-            'name' => 'Didier',
-            'email' => 'didier@example.com',
-            'password' => Hash::make('password'),
-            'role' => RoleKeyEnum::patient,
-        ]);
-
-        User::factory()->create([
-            'name' => 'Marcel',
-            'email' => 'marcel@example.com',
-            'password' => Hash::make('password'),
-            'role' => RoleKeyEnum::Helper,
-        ]);
+            User::factory()->create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make('password'),
+                'role_id' => $role->id,
+            ]);
+        }
     }
 }

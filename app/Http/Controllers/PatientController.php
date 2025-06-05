@@ -7,6 +7,7 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class PatientController extends Controller
 {
@@ -21,7 +22,7 @@ class PatientController extends Controller
 
         $search = $request->query('search');
 
-        $patients = Patient::when($user->role !== "d8bad2f9-2d24-3861-9f7a-d4a5dccfe79d", function ($query) use ($user) {
+        $patients = Patient::when($user->role->key->value !== 'admin', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })
             ->when($search, function ($query, $search) {
@@ -81,6 +82,8 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
+//        Gate::authorize('update', Patient::class);
+
         return view('patients.edit', compact('patient'));
     }
 
@@ -89,6 +92,8 @@ class PatientController extends Controller
      */
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
+//        Gate::authorize('update', Patient::class);
+
         $patient->update($request->validated());
         return redirect()->route('patients.index');
     }

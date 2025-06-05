@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\RoleKeyEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +17,11 @@ class RoleFactory extends Factory
      */
     public function definition(): array
     {
+        $key = fake()->randomElement(RoleKeyEnum::cases());
+
         return [
-            'name' => fake()->name(),
-            'key' => fake()->unique(),
+            'name' => ucfirst($key->name),
+            'key' => $key->value,
         ];
     }
 }
