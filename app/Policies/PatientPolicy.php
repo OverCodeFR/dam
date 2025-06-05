@@ -36,10 +36,10 @@ class PatientPolicy
     /**
      * Determine whether the user can update the model.
      */
-//    public function update(User $user, Patient $patient): bool
-//    {
-//        return true;
-//    }
+    public function update(User $user, Patient $patient): bool
+    {
+        return $user->role->key->value !== 'patient' || ;
+    }
 
     public function showButton(User $user): bool
     {

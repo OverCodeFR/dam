@@ -82,7 +82,7 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-//        Gate::authorize('update', Patient::class);
+        Gate::authorize('update', Patient::class);
 
         return view('patients.edit', compact('patient'));
     }
@@ -92,7 +92,7 @@ class PatientController extends Controller
      */
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
-//        Gate::authorize('update', Patient::class);
+        Gate::authorize('update', Patient::class);
 
         $patient->update($request->validated());
         return redirect()->route('patients.index');

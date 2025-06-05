@@ -105,7 +105,7 @@ class TreatmentController extends Controller
         $treatment->fill($request->validated());
         $treatment->save();
 
-        if(auth()->user()->role !== 'e5d2e8b5-7a40-3ed6-a7e9-00d3f87c385d'){
+        if(auth()->user()->role->key->value !== 'patient'){
             return redirect()->route('patients.index');
         } else {
             return redirect()->route('treatments.index');
