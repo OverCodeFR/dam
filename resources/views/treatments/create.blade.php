@@ -21,7 +21,7 @@
 
 
             <x-form.submit-button label="Créer le traitement" />
-            <x-form.cancel-button href="{{ url()->previous() }}" />
+            <x-form.cancel-button/>
 
         </form>
     </div>

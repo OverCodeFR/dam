@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\StoreTreatmentRequest;
+use App\Http\Requests\UpdateTreatmentRequest;
 use App\Models\Treatment;
 use App\Models\Patient;
 use Illuminate\Http\Request;
@@ -126,22 +127,21 @@ class TreatmentController extends Controller
     {
         //
     }
-//
-//    /**
-//     * Show the form for editing the specified resource.
-//     */
-//    public function edit(Item $item)
-//    {
-//        //
-//    }
-//
-//    /**
-//     * Update the specified resource in storage.
-//     */
-//    public function update(UpdateItemRequest $request, Item $item)
-//    {
-//        //
-//    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Treatment $treatment)
+    {
+        return view('treatments.edit', compact('treatment'));
+    }
+
+
+    public function update(UpdateTreatmentRequest $request, Treatment $treatment)
+    {
+        $treatment->update($request->validated());
+        return redirect()->route('treatments.index');
+    }
 //
 //    /**
 //     * Remove the specified resource from storage.

@@ -10,7 +10,7 @@
             description="Remplissez les champs suivants pour modifier les informations d'un patient."
         />
 
-        <form action="{{ route('patients.update') }}" method="POST" class="space-y-4">
+            <form action="{{ route('patients.update', $patient->id) }}" method="POST" class="space-y-4">
             @method('PUT')
             @csrf
 
@@ -21,7 +21,7 @@
 
 
             <x-form.submit-button label="Valider les modifications" />
-            <x-form.cancel-button href="{{ redirect()->route('patients.index') }}" />
+            <x-form.cancel-button/>
 
         </form>
     </div>

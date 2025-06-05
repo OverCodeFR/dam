@@ -10,8 +10,7 @@
     <input
         type="date"
         name="{{ $name }}"
-        id="{{ $name }}"
-        value="{{ old($name, $value ?? '') }}"
+        value="{{ old($name, $value) }}"
         {{ $attributes }}
         class="block w-full rounded-md border @error($name) border-red-500 @else border-gray-300 @enderror bg-white text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm px-3 py-1" />
 
@@ -22,3 +21,4 @@
     </p>
     @enderror
 </div>
+

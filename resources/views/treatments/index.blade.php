@@ -37,8 +37,8 @@
                                     {{ $treatment->end_at ? $treatment->end_at->format('d/m/Y') : '—' }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->patient->name }}</td>
-                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-sm font-medium sm:pr-6">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
+                                <td>
+                                <a href="{{ route('treatments.edit',$treatment->id) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
                                 </td>
                             </tr>
                         @endforeach
