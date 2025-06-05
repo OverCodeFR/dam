@@ -22,7 +22,7 @@ class PatientController extends Controller
 
         $search = $request->query('search');
 
-        $patients = Patient::when($user->role->key->value !== 'admin', function ($query) use ($user) {
+        $patients = Patient::when($user->role->key !== 'admin', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })
             ->when($search, function ($query, $search) {
@@ -82,7 +82,7 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        Gate::authorize('update', Patient::class);
+        Gate::authorize('update', $patient);
 
         return view('patients.edit', compact('patient'));
     }
@@ -92,7 +92,7 @@ class PatientController extends Controller
      */
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
-        Gate::authorize('update', Patient::class);
+        Gate::authorize('update', $patient);
 
         $patient->update($request->validated());
         return redirect()->route('patients.index');

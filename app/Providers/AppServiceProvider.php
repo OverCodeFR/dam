@@ -2,9 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Patient;
-use App\Policies\PatientPolicy;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
