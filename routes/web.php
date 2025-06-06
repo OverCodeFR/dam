@@ -18,9 +18,14 @@ Route::middleware(['auth'])->group(function () {
     //Patients
     Route::resource('patients', PatientController::class);
 
+    //Treatments Types
+    Route::resource('treatments_types', \App\Http\Controllers\TreatmentTypeController::class);
+
     //Treatments
     Route::resource('treatments', TreatmentController::class)->except('index', 'show');
     Route::get('/treatments/{patient?}', [TreatmentController::class, 'index'])->name('treatments.index');
+
+
 
     //Settings
     Route::redirect('settings', 'settings/profile');

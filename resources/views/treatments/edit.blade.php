@@ -18,6 +18,8 @@
             <x-form.input-number name="dosage" id="dosage" :value="old('dosage', $treatment->dosage)" label="Dosage" />
             <x-form.input-date name="start_at" id="start_at" :value="old('start_at', $treatment->start_at->format('Y-m-d'))" label="Date de début" />
             <x-form.input-date name="end_at" id="end_at" :value="old('end_at', $treatment->end_at->format('Y-m-d'))" label="Date de fin" />
+            <x-form.type-list name="treatment_type_id" label="Type de traitement" :options="$treatmentTypes->pluck('name', 'id')" :value="old('treatment_type_id', $treatment->treatment_type_id)"/>
+
 
 
             <x-form.submit-button label="Valider les modifications" />

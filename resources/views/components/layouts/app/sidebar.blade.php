@@ -18,6 +18,7 @@
                     <flux:navlist.item icon="users" :href="route('patients.index')" wire:navigate>{{ __('Patients') }}</flux:navlist.item>
                     @endcan
                     <flux:navlist.item icon="document" :href="route('treatments.index')" wire:navigate>{{ __('Traitements') }}</flux:navlist.item>
+                    <flux:navlist.item icon="plus" :href="route('treatments_types.create')" wire:navigate>{{ __('Ajout de type') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

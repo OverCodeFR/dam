@@ -21,6 +21,7 @@ class Treatment extends Model
         'start_at',
         'end_at',
         'patient_id',
+        'treatment_type_id',
     ];
 
     public $timestamps = false;

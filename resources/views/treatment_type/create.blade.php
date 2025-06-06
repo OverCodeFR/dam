@@ -6,25 +6,21 @@
             </div>
         @endif
         <x-form.form-header
-            title="Créer un traitement"
-            description="Remplissez les champs suivants pour enregistrer un nouveau traitement."
+            title="Ajouter un type de traitement"
+            description="Remplissez les champs suivants pour ajouter un nouveau type de traitement."
         />
 
-        <form action="{{ route('treatments.store') }}" method="POST" class="space-y-4">
+        <form action="{{ route('treatments_types.store') }}" method="POST" class="space-y-4">
             @csrf
 
-            <x-form.input-text  name="name" id="name"  label="Nom" />
-            <x-form.input-number   name="dosage" id="dosage" min="0"  label="Dosage" />
-            <x-form.input-date name="start_at" id="start_at" label="Date de début" />
-            <x-form.input-date  name="end_at" id="end_at" label="Date de fin" />
-            <input type="hidden" name="patient_id" value="{{ request('patient_id') }}">
-            <x-form.type-list name="treatment_type_id" label="Type de traitement" :options="$treatmentTypes->pluck('name', 'id')" :value="old('treatment_type_id')"/>
+            <x-form.input-text  name="name" id="name"  label="Type de traitement" />
+            <x-form.type-list name="module" label="Module associé" :options="$modules" :value="old('module', $treatment->module ?? null)"/>
 
 
 
 
 
-            <x-form.submit-button label="Créer le traitement" />
+            <x-form.submit-button label="Ajouter le type" />
             <x-form.cancel-button/>
 
         </form>
@@ -46,3 +42,4 @@
     </script>
 
 </x-layouts.app>
+

@@ -22,7 +22,7 @@
         <div class="mt-8 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <x-table.table :headers="['Nom', 'Dosage', 'Date de début', 'Date de fin', 'Patient']">
+                    <x-table.table :headers="['Nom', 'Dosage', 'Date de début', 'Date de fin', 'Patient', 'Type de traitement']">
                         @foreach($treatments as $treatment)
                             <tr>
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$treatment->name}}</td>
@@ -35,6 +35,7 @@
                                     {{ $treatment->end_at ? $treatment->end_at->format('d/m/Y') : '—' }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->patient->name }}</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->treatment_type->name }}</td>
                                 <td>
                                     <a href="{{ route('treatments.edit',$treatment->id) }}"
                                        class="text-indigo-600 hover:text-indigo-900">Modifier</a>

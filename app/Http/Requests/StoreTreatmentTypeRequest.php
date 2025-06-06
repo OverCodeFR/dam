@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTreatmentRequest extends FormRequest
+class StoreTreatmentTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,7 @@ class UpdateTreatmentRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'dosage' => 'required|string',
-            'start_at' => 'required|date',
-            'end_at' => 'required|date',
-            'treatment_type_id' => 'required|string',
+            'module' => 'required|string',
         ];
     }
-
 }
