@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Patient;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class PatientSeeder extends Seeder
 {
@@ -14,36 +12,22 @@ class PatientSeeder extends Seeder
      */
     public function run(): void
     {
-        Patient::factory()->create([
-            'name' => 'Janne',
-            'phone' => '0751963580',
-            'address' => '13 rue des Lilas',
-            'email' => 'janne@example.com',
-            'user_id' => 3,
-        ]);
+        $patients = [
+            ['name' => 'Janne', 'phone' => '0751963580', 'address' => '13 rue des Lilas', 'email' => 'janne@example.com', 'user_id' => 2,],
+            ['name' => 'Jamie', 'phone' => '0654597016', 'address' => '79 rue des Pépinières', 'email' => 'jamie@example.com', 'user_id' => 2,],
+            ['name' => 'Sam', 'phone' => '0696831895', 'address' => '1 rue des Roseaux', 'email' => 'sam@example.com', 'user_id' => 3,],
+            ['name' => 'Natacha', 'phone' => '0698476521', 'address' => '56 Boulevard des Primevères', 'email' => 'natacha@example.com', 'user_id' => 4,]
+        ];
 
-        Patient::factory()->create([
-            'name' => 'Jamie',
-            'phone' => '0654597016',
-            'address' => '79 rue des Pépinières',
-            'email' => 'jamie@example.com',
-            'user_id' => 3,
-        ]);
+        foreach ($patients as $data) {
 
-        Patient::factory()->create([
-            'name' => 'Sam',
-            'phone' => '0696831895',
-            'address' => '1 rue des Roseaux',
-            'email' => 'sam@example.com',
-            'user_id' => 4,
-        ]);
-
-        Patient::factory()->create([
-            'name' => 'Natacha',
-            'phone' => '0698476521',
-            'address' => '56 Boulevard des Primevères',
-            'email' => 'natacha@example.com',
-            'user_id' => 2,
-        ]);
+            Patient::factory()->create([
+                'name' => $data['name'],
+                'phone' => $data['phone'],
+                'address' => $data['address'],
+                'email' => $data['email'],
+                'user_id' => $data['user_id'],
+            ]);
+        }
     }
 }

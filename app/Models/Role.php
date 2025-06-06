@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\RoleKeyEnum;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Role extends Model
@@ -16,6 +15,7 @@ class Role extends Model
         'key',
     ];
 
+    public $timestamps = false;
 
     public function users(): HasMany
     {

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->enum('key', array_column(RoleKeyEnum::cases(), 'value'));
-            $table->timestamps();
         });
     }
 
