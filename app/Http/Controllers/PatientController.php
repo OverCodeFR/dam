@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 use App\Models\Patient;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 
 class PatientController extends Controller
 {
@@ -19,7 +18,6 @@ class PatientController extends Controller
         Gate::authorize('viewAny', Patient::class);
 
         $user = auth()->user();
-
         $search = $request->query('search');
 
         $patients = Patient::when($user->role->key !== 'admin', function ($query) use ($user) {

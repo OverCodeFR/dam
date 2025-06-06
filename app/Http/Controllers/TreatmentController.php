@@ -1,15 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\StorePatientRequest;
+
 use App\Http\Requests\StoreTreatmentRequest;
 use App\Http\Requests\UpdateTreatmentRequest;
 use App\Models\Treatment;
 use App\Models\Patient;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Arr;
 
 class TreatmentController extends Controller
 {
@@ -28,11 +26,18 @@ class TreatmentController extends Controller
             $treatments->where('patient_id', $patient_id->id);
 
         } elseif ($user->role->key === 'admin') {
-            $treatments = Treatment::query();
+            if(is_null($patient)) {
+                $treatments = Treatment::query();
+            } else {
+                $treatments->where('patient_id', $patient->id);
+            }
         } else {
-            $patients_id = Patient::where('user_id', $user->id)->pluck('id');
-            $treatments->whereIn('patient_id', $patients_id);
-
+            if(!\Illuminate\Support\Facades\Request::is('treatments/*')) {
+                $patients_id = Patient::where('user_id', $user->id)->pluck('id');
+                $treatments->whereIn('patient_id', $patients_id);
+            } else {
+                $treatments->where('patient_id', $patient->id);
+            }
         }
 
         if ($search) {
@@ -64,16 +69,27 @@ class TreatmentController extends Controller
      */
     public function store(StoreTreatmentRequest $request)
     {
+//        $treatmentData = Arr::only($request->validated(), [
+//            'name', 'dosage', 'start_at', 'end_at', 'patient_id']);
+//        $treatment = Treatment::create($treatmentData);
 
-        $treatment = new Treatment();
-        $treatment->fill($request->validated());
-        $treatment->save();
+        $moment_day_keys = ['MATIN', 'MIDI', 'APRES_MIDI', 'SOIR', 'NUIT'];
 
-        if(auth()->user()->role->key !== 'patient'){
-            return redirect()->route('patients.index');
-        } else {
-            return redirect()->route('treatments.index');
+        $moment_day_result = [];
+
+        foreach ($moment_day_keys as $moment_day_key) {
+            if ($request->has($moment_day_key)) {
+                $moment_day_result[] = $moment_day_key;
+            }
         }
+
+        $result = implode('_', $moment_day_result);
+        return $result;
+
+
+        return auth()->user()->role->key !== 'patient'
+            ? redirect()->route('patients.index')
+            : redirect()->route('treatments.index');
     }
 
 //    /**

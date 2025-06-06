@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(TreatmentSeeder::class);
 
-//        $this->call(Treatment::class);
+        $this->call(FrequencySeeder::class);
+
+        $this->call(TreatmentFrequencySeeder::class);
 
     }
 }

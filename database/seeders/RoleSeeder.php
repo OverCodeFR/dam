@@ -15,8 +15,8 @@ class RoleSeeder extends Seeder
     {
         foreach (RoleKeyEnum::cases() as $case) {
             Role::firstOrCreate(
+                ['name' => ucfirst($case->name)],
                 ['key' => $case->value],
-                ['name' => ucfirst($case->name)]
             );
         }
     }
