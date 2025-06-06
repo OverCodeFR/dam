@@ -54,8 +54,10 @@ class TreatmentController extends Controller
      */
     public function create(Patient $patient)
     {
-        return view('treatments.create', compact('patient'));
+        $treatmentTypes = \App\Models\TreatmentType::all();
+        return view('treatments.create',['treatmentTypes' => $treatmentTypes],compact('patient'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -95,7 +97,8 @@ class TreatmentController extends Controller
      */
     public function edit(Treatment $treatment)
     {
-        return view('treatments.edit', compact('treatment'));
+        $treatmentTypes = \App\Models\TreatmentType::all();
+        return view('treatments.edit', ['treatmentTypes' => $treatmentTypes] ,compact('treatment'));
     }
 
 
