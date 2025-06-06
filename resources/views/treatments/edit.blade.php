@@ -2,7 +2,7 @@
     <div class="container mx-auto px-4 py-6">
         @if ($errors->any())
             <div class="mb-4 p-4 rounded bg-red-100 text-red-700 border border-red-300">
-                <strong>Erreur :</strong> Veuillez corriger les champs ci-dessous.
+                <strong>Erreur :</strong> Assurez-vous de remplir correctement les champs ci-dessous.
             </div>
         @endif
         <x-form.form-header

@@ -17,9 +17,9 @@ class UserSeeder extends Seeder
     {
         $users = [
             ['name' => 'Sophie', 'email' => 'sophie@example.com', 'role' => RoleKeyEnum::Admin],
-            ['name' => 'Natacha', 'email' => 'natacha@example.com', 'role' => RoleKeyEnum::patient],
             ['name' => 'Didier', 'email' => 'didier@example.com', 'role' => RoleKeyEnum::Healthcare],
             ['name' => 'Marcel', 'email' => 'marcel@example.com', 'role' => RoleKeyEnum::Helper],
+            ['name' => 'Natacha', 'email' => 'natacha@example.com', 'role' => RoleKeyEnum::patient],
         ];
 
         foreach ($users as $data) {
