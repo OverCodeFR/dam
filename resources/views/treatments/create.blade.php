@@ -1,5 +1,3 @@
-{{$errors}}
-
 <x-layouts.app>
     <div class="container mx-auto px-4 py-6">
         @if ($errors->any())
@@ -22,6 +20,11 @@
             <input type="hidden" name="patient_id" value="{{ request('patient_id') }}">
             <x-form.type-list name="treatment_type_id" label="Type de traitement" :options="$treatmentTypes->pluck('name', 'id')" :value="old('treatment_type_id')"/>
 
+
+
+
+
+            //TODO component
             <div>
                 <h2 class="text-base/7 font-semibold text-gray-900">Fréquences</h2>
             </div>

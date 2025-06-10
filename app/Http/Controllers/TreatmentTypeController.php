@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTreatmentTypeRequest;
 use App\Models\TreatmentType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TreatmentTypeController extends Controller
 {
@@ -21,6 +22,8 @@ class TreatmentTypeController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', TreatmentType::class);
+
         $modules = TreatmentType::select('module')->distinct()->pluck('module', 'module');
         return view('treatment_type.create', compact('modules'));
 
@@ -31,6 +34,8 @@ class TreatmentTypeController extends Controller
      */
     public function store(StoreTreatmentTypeRequest $request)
     {
+        Gate::authorize('create', TreatmentType::class);
+
         $treatment_type = new TreatmentType();
         $treatment_type->fill($request->validated());
         $treatment_type->save();
