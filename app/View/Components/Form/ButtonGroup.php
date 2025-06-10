@@ -6,13 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CancelButton extends Component
+class ButtonGroup extends Component
 {
-    public string $label;
-
-    public function __construct(string $label)
+    /**
+     * Create a new component instance.
+     */
+    public function __construct()
     {
-        $this->label = $label;
+        //
     }
 
     /**
@@ -20,6 +21,6 @@ class CancelButton extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.form.cancel-button');
+        return view('components.form.button-group');
     }
 }

@@ -1,6 +1,8 @@
-
-<form>
-    <button class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-100" type="reset">Annuler</button>
-</form>
-
-
+<div class="mt-6 flex items-center justify-end gap-x-6">
+    <button type="reset"
+            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm
+                   hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
+                   focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        {{ $label }}
+    </button>
+</div>

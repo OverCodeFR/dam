@@ -124,7 +124,6 @@ class TreatmentController extends Controller
             'name', 'dosage', 'start_at', 'end_at', 'patient_id', 'treatment_type_id']);
         $treatment = Treatment::create($treatmentData);
 
-        Log::info("Traitement => ". $treatment);
 
         $moment_day_keys = ['matin', 'midi', 'après_midi', 'soir', 'nuit'];
 
@@ -141,7 +140,6 @@ class TreatmentController extends Controller
         $result_moment_day = implode('/', $moment_day_result);
         $frequency = Frequency::where('moment_day', $result_moment_day)->first();
 
-        Log::info("Fréquence => ". $frequency->id);
 
         $treatmentFrequencyData = ['amount' => $amount, 'frequency_id' => $frequency->id, 'treatment_id' => $treatment->id];
         $treatmentFrequency = TreatmentFrequency::create($treatmentFrequencyData);
@@ -172,7 +170,8 @@ class TreatmentController extends Controller
      */
     public function edit(Treatment $treatment)
     {
-        return view('treatments.edit', compact('treatment'));
+        $treatmentTypes = \App\Models\TreatmentType::all();
+        return view('treatments.edit', ['treatmentTypes' => $treatmentTypes] ,compact('treatment'));
     }
 
 

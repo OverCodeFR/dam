@@ -5,31 +5,22 @@
                 <strong>Erreur :</strong> Assurez-vous de remplir correctement les champs ci-dessous.
             </div>
         @endif
-        <x-form.form-header
-            title="Créer un traitement"
-            description="Remplissez les champs suivants pour enregistrer un nouveau traitement."
-        />
 
-        <form action="{{ route('treatments.store') }}" method="POST" class="space-y-4">
+        <form action="{{ route('treatments.store') }}" method="POST" class="bg-gray-200 p-6 rounded-md shadow-sm space-y-12">
             @csrf
 
-            <x-form.input-text  name="name" id="name"  label="Nom" />
-            <x-form.input-number   name="dosage" id="dosage" min="0"  label="Dosage" />
-            <x-form.input-date name="start_at" id="start_at" label="Date de début" />
-            <x-form.input-date  name="end_at" id="end_at" label="Date de fin" />
-            <input type="hidden" name="patient_id" value="{{ request('patient_id') }}">
-            <x-form.type-list name="treatment_type_id" label="Type de traitement" :options="$treatmentTypes->pluck('name', 'id')" :value="old('treatment_type_id')"/>
+            <x-form.section title="Informations du traitement" description="Entrez les données du traitement.">
+                <x-form.input-text name="name" label="Nom" />
+                <x-form.input-number name="dosage" label="Dosage" />
+                <x-form.input-date name="start_at" label="Date de début" />
+                <x-form.input-date name="end_at" label="Date de fin" />
+                <x-form.type-list name="treatment_type_id" label="Type de traitement" :options="$treatmentTypes->pluck('name', 'id')" :value="old('treatment_type_id')" />
+                <input type="hidden" name="patient_id" value="{{ request('patient_id') }}">
+            </x-form.section>
 
-
-
-
-
-            //TODO component
-            <div>
-                <h2 class="text-base/7 font-semibold text-gray-900">Fréquences</h2>
-            </div>
-            <div class="max-w-2xl space-y-10 md:col-span-2">
-                <fieldset>
+            <x-form.section title="Fréquences" description="Quand le traitement doit être administré ?">
+                <fieldset class="sm:col-span-6">
+                    <legend class="text-sm font-semibold text-gray-900">Moments</legend>
                     <div class="mt-6 space-y-6">
                         <div class="flex gap-3">
                             <x-form.checkbox name="MATIN" label="Matin" />
@@ -39,13 +30,17 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
+            </x-form.section>
 
-            <x-form.submit-button label="Créer le traitement" />
-            <x-form.cancel-button/>
+
+            <x-form.button-group>
+                <x-form.cancel-button label="Annuler"/>
+                <x-form.submit-button label="Créer le traitement" />
+            </x-form.button-group>
 
         </form>
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const startAt = document.getElementById('start_at');
@@ -61,5 +56,4 @@
             }
         });
     </script>
-
 </x-layouts.app>
