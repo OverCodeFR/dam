@@ -23,6 +23,8 @@ class TreatmentFrequency extends Pivot
      */
     protected $fillable = [
         'amount',
+        'frequency_id',
+        'treatment_id',
     ];
 
     public function frequency(): BelongsTo
