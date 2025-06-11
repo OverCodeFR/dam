@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Stock extends Model
 {
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *
@@ -16,6 +17,8 @@ class Stock extends Model
     protected $fillable = [
         'amount',
     ];
+
+    public $timestamps = false;
 
     public function treatment(): BelongsTo
     {
