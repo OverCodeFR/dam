@@ -21,9 +21,9 @@
                     @can('create', App\Models\TreatmentType::class)
                     <flux:navlist.item icon="plus" :href="route('treatments_types.create')" wire:navigate>{{ __('Ajout de type') }}</flux:navlist.item>
                     @endcan
-                    @can('viewAny_patients', App\Models\Patient::class)
-                        <flux:navlist.item icon="plus" :href="route('patients.assignate')" wire:navigate>{{ __('Assignation de patient') }}</flux:navlist.item>
-                    @endcan
+{{--                    @can('viewAny_patients', App\Models\Patient::class)--}}
+{{--                        <flux:navlist.item icon="plus" :href="route('patients.assignate')" wire:navigate>{{ __('Assignation de patient') }}</flux:navlist.item>--}}
+{{--                    @endcan--}}
                 </flux:navlist.group>
             </flux:navlist>
 
