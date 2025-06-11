@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Patient>
@@ -22,7 +22,7 @@ class PatientFactory extends Factory
             'phone' => fake()->phoneNumber(),
             'address' => fake()->address(),
             'email' => fake()->unique()->safeEmail(),
-            'user_id' => fake()->numberBetween(2, 4),
+            'user_id' => User::factory(),
         ];
     }
 }

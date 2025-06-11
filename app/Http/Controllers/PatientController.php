@@ -35,6 +35,31 @@ class PatientController extends Controller
         return view('patients.index', compact('patients'));
     }
 
+    public function assignate(Request $request)
+    {
+        Gate::authorize('viewAny_patients', Patient::class);
+
+        $user = auth()->user();
+        $search = $request->query('search');
+
+        $patients =Patient::all();
+
+//        $patients = Patient::when($user->role->key !== 'admin', function ($query) use ($user) {
+//            $query->where('user_id', $user->id);
+//        })
+//            ->when($search, function ($query, $search) {
+//                $query->where(function ($q) use ($search) {
+//                    $q->where('name', 'like', '%' . $search . '%')
+//                        ->orWhere('phone', 'like', '%' . $search . '%')
+//                        ->orWhere('address', 'like', '%' . $search . '%')
+//                        ->orWhere('email', 'like', '%' . $search . '%');
+//                });
+//            })->paginate(10);
+
+        return view('patients.assignate', compact('patients'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
