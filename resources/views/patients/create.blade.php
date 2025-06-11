@@ -13,10 +13,10 @@
         <form action="{{ route('patients.store') }}" method="POST" class="space-y-4">
             @csrf
 
-            <x-form.input-text  name="name" id="name" required autocomplete="name_patient" label="Nom complet" />
-            <x-form.input-tel   name="phone" id="phone" required autocomplete="tel" label="Téléphone" />
-            <x-form.input-text  name="address" id="address" required autocomplete="address" label="Adresse" />
-            <x-form.input-mail id="email" name="email" required autocomplete="email" label="Email" />
+            <x-form.input-text  name="name" required autocomplete="name_patient" label="Nom complet" />
+            <x-form.input-tel   name="phone" required autocomplete="tel" label="Téléphone" />
+            <x-form.input-text  name="address" required autocomplete="address" label="Adresse" />
+            <x-form.input-mail id="email" required autocomplete="email" label="Email" />
 
 
             <x-form.submit-button label="Créer le patient" />

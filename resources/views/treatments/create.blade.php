@@ -13,33 +13,83 @@
         <form action="{{ route('treatments.store') }}" method="POST" class="space-y-4">
             @csrf
 
-            <x-form.input-text  name="name" id="name"  label="Nom" />
-            <x-form.input-number   name="dosage" id="dosage" min="0"  label="Dosage" />
-            <x-form.input-date name="start_at" id="start_at" label="Date de début" />
-            <x-form.input-date  name="end_at" id="end_at" label="Date de fin" />
+            <x-form.input-text  name="name" label="Nom" autocomplete="name_treatment"/>
+            <x-form.input-number   name="dosage" min="0"  label="Dosage" />
+            <x-form.input-date name="start_at" label="Date de début" />
+            <x-form.input-date  name="end_at" label="Date de fin" />
             <input type="hidden" name="patient_id" value="{{ request('patient_id') }}">
-            <x-form.type-list name="treatment_type_id" label="Type de traitement" :options="$treatmentTypes->pluck('name', 'id')" :value="old('treatment_type_id')"/>
+{{--            <x-form.type-list name="treatment_type_id" label="Type de traitement" :options="$treatmentTypes->pluck('name', 'id')" :value="old('treatment_type_id')"/>--}}
 
 
+            <fieldset>
+                <legend class="text-sm/6 font-semibold text-gray-900">Fréquences</legend>
 
+                <div class="mt-6 space-y-6">
+                    <x-form.radio
+                        id="periodic"
+                        name="frequency"
+                        value="periodic"
+                        label="Périodique"
+                        checked="true"
+                        onchange="toggleFields()"/>
 
+                    <x-form.radio
+                        id="planned"
+                        name="frequency"
+                        value="planned"
+                        label="Planifier"
+                        onchange="toggleFields()"/>
+                </div>
 
-            //TODO component
-            <div>
-                <h2 class="text-base/7 font-semibold text-gray-900">Fréquences</h2>
-            </div>
-            <div class="max-w-2xl space-y-10 md:col-span-2">
-                <fieldset>
-                    <div class="mt-6 space-y-6">
-                        <div class="flex gap-3">
-                            <x-form.checkbox name="MATIN" label="Matin" />
-                            <x-form.checkbox name="APRES_MIDI" label="Après-midi" />
-                            <x-form.checkbox name="SOIR" label="Soir" />
-                            <x-form.checkbox name="NUIT" label="Nuit" />
+                <x-form.input-hour-interval id="periodic-field" name="interval" min="1" max="24" label="À quel intervalle d'heures est-ce que cela se produit ?" placeholder="Ex: 1"/>
+
+                <div id="planned-field" class="mt-4 hidden">
+                    <label class="block text-sm font-medium text-gray-700">Moments de la journée</label>
+                    <div class="mt-2 space-y-2">
+
+                        <div class="flex items-center gap-2">
+                            <x-form.checkbox id="MATIN" name="MATIN" label="Matin" onchange="toggleTextbox('MATIN')" />
+                            <x-form.moment-day-list id="listbox_MATIN" name="listbox_MATIN" :options="$frequency_getMatin->pluck('hour', 'id')" :value="old('listbox_MATIN')"/>
                         </div>
+
+                        <div class="flex items-center gap-2">
+                            <x-form.checkbox name="MIDI" label="Midi" onchange="toggleTextbox('MIDI')" />
+                            <x-form.moment-day-list id="listbox-MIDI" name="list_MIDI" :options="$frequency_getMidi->pluck('hour', 'id')" :value="old('list_MIDI')"/>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <x-form.checkbox name="APRES_MIDI" label="Après-midi" onchange="toggleTextbox('APRES_MIDI')" />
+                            <x-form.moment-day-list id="listbox-APRES_MIDI" name="list_APRES_MIDI" :options="$frequency_getApres_midi->pluck('hour', 'id')" :value="old('list_APRES_MIDI')"/>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <x-form.checkbox name="SOIR" label="Soir" onchange="toggleTextbox('SOIR')" />
+                            <x-form.moment-day-list id="listbox-SOIR" name="list_SOIR" :options="$frequency_getSoir->pluck('hour', 'id')" :value="old('list_SOIR')"/>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <x-form.checkbox name="NUIT" label="Nuit" onchange="toggleTextbox('NUIT')" />
+                            <x-form.moment-day-list id="listbox-NUIT" name="list_NUIT" :options="$frequency_getNuit->pluck('hour', 'id')" :value="old('list_NUIT')"/>
+                        </div>
+
                     </div>
-                </fieldset>
-            </div>
+                </div>
+            </fieldset>
+
+            <script>
+                function toggleFields() {
+                    const isPeriodic = document.getElementById('periodic').checked;
+                    document.getElementById('periodic-field').style.display = isPeriodic ? 'block' : 'none';
+                    document.getElementById('planned-field').style.display = isPeriodic ? 'none' : 'block';
+                }
+
+                function toggleTextbox(name) {
+                    const checkbox = document.getElementById(name);
+                    const listboxDiv = document.getElementById(`listbox_${name}`);
+                    listboxDiv.style.display = checkbox.checked ? 'block' : 'none'; }
+
+                toggleFields();
+            </script>
 
             <x-form.submit-button label="Créer le traitement" />
             <x-form.cancel-button/>

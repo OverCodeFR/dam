@@ -6,22 +6,26 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Checkbox extends Component
+class MomentDayList extends Component
 {
-
+    public ?string $id;
     public string $name;
-    public string $label;
+    public $options;
+    public $value;
 
     /**
-
+     * @param string|null $id
      * @param string $name
      * @param string $label
+     * @param $options
+     * @param $value
      */
-    public function __construct( string $name, string $label)
+    public function __construct(?string $id, string $name, $options, $value = null)
     {
-
+        $this->id = $id;
         $this->name = $name;
-        $this->label = $label;
+        $this->options = $options;
+        $this->value = $value;
     }
 
 
@@ -30,6 +34,6 @@ class Checkbox extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.form.checkbox');
+        return view('components.form.moment-day-list');
     }
 }

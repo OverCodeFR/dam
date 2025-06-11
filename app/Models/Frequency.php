@@ -17,6 +17,7 @@ class Frequency extends Model
      */
     protected $fillable = [
         'moment_day',
+        'hour',
     ];
 
     public $timestamps = false;

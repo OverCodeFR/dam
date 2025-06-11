@@ -73,7 +73,17 @@ class TreatmentController extends Controller
     public function create(Patient $patient)
     {
         $treatmentTypes = \App\Models\TreatmentType::all();
-        return view('treatments.create',['treatmentTypes' => $treatmentTypes],compact('patient'));
+
+        $frequency_getMatin = \App\Models\Frequency::where('moment_day', 'Matin')->get();
+        $frequency_getMidi = \App\Models\Frequency::where('moment_day', 'Midi')->get();
+        $frequency_getApres_midi = \App\Models\Frequency::where('moment_day', 'Après-midi')->get();
+        $frequency_getSoir = \App\Models\Frequency::where('moment_day', 'Soir')->get();
+        $frequency_getNuit = \App\Models\Frequency::where('moment_day', 'Nuit')->get();
+
+        return view('treatments.create',['treatmentTypes' => $treatmentTypes, 'frequency_getMatin' => $frequency_getMatin,
+            'frequency_getMidi' => $frequency_getMidi, 'frequency_getApres_midi' => $frequency_getApres_midi,
+                'frequency_getSoir' => $frequency_getSoir, 'frequency_getNuit' => $frequency_getNuit]
+            ,compact('patient'));
     }
 
 
@@ -85,8 +95,6 @@ class TreatmentController extends Controller
         $treatmentData = Arr::only($request->validated(), [
             'name', 'dosage', 'start_at', 'end_at', 'patient_id', 'treatment_type_id']);
         $treatment = Treatment::create($treatmentData);
-
-        Log::info("Traitement => ". $treatment);
 
         $moment_day_keys = ['matin', 'midi', 'après_midi', 'soir', 'nuit'];
 
@@ -102,8 +110,6 @@ class TreatmentController extends Controller
 
         $result_moment_day = implode('/', $moment_day_result);
         $frequency = Frequency::where('moment_day', $result_moment_day)->first();
-
-        Log::info("Fréquence => ". $frequency->id);
 
         $treatmentFrequencyData = ['amount' => $amount, 'frequency_id' => $frequency->id, 'treatment_id' => $treatment->id];
         $treatmentFrequency = TreatmentFrequency::create($treatmentFrequencyData);
