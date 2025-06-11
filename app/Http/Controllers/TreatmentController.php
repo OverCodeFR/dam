@@ -30,13 +30,13 @@ class TreatmentController extends Controller
             $treatments->where('patient_id', $patient_id->id);
 
         } elseif ($user->role->key === 'admin') {
-            if(is_null($patient)) {
+            if (is_null($patient)) {
                 $treatments = Treatment::query();
             } else {
                 $treatments->where('patient_id', $patient->id);
             }
         } else {
-            if(!\Illuminate\Support\Facades\Request::is('treatments/*')) {
+            if (!\Illuminate\Support\Facades\Request::is('treatments/*')) {
                 $patients_id = Patient::where('user_id', $user->id)->pluck('id');
                 $treatments->whereIn('patient_id', $patients_id);
             } else {
@@ -56,9 +56,11 @@ class TreatmentController extends Controller
                     ->orWhere('end_at', 'like', '%' . $search . '%');
 
                 if ($patients->isNotEmpty()) {
-                    $q->orWhereIn('patient_id', $patients);}
+                    $q->orWhereIn('patient_id', $patients);
+                }
                 if ($treatment_types->isNotEmpty()) {
-                    $q->orWhereIn('treatment_type_id', $treatment_types);}
+                    $q->orWhereIn('treatment_type_id', $treatment_types);
+                }
             });
         }
 
@@ -80,10 +82,10 @@ class TreatmentController extends Controller
         $frequency_getSoir = \App\Models\Frequency::where('moment_day', 'Soir')->get();
         $frequency_getNuit = \App\Models\Frequency::where('moment_day', 'Nuit')->get();
 
-        return view('treatments.create',['treatmentTypes' => $treatmentTypes, 'frequency_getMatin' => $frequency_getMatin,
-            'frequency_getMidi' => $frequency_getMidi, 'frequency_getApres_midi' => $frequency_getApres_midi,
+        return view('treatments.create', ['treatmentTypes' => $treatmentTypes, 'frequency_getMatin' => $frequency_getMatin,
+                'frequency_getMidi' => $frequency_getMidi, 'frequency_getApres_midi' => $frequency_getApres_midi,
                 'frequency_getSoir' => $frequency_getSoir, 'frequency_getNuit' => $frequency_getNuit]
-            ,compact('patient'));
+            , compact('patient'));
     }
 
 
@@ -92,34 +94,36 @@ class TreatmentController extends Controller
      */
     public function store(StoreTreatmentRequest $request)
     {
+        // 1. Création du traitement
         $treatmentData = Arr::only($request->validated(), [
-            'name', 'dosage', 'start_at', 'end_at', 'patient_id', 'treatment_type_id']);
+            'name', 'dosage', 'start_at', 'end_at', 'patient_id', 'treatment_type_id'
+        ]);
         $treatment = Treatment::create($treatmentData);
 
-
-        $moment_day_keys = ['matin', 'midi', 'après_midi', 'soir', 'nuit'];
-
-        $moment_day_result = [];
-        $amount = 0;
+        // 2. Liste des moments de la journée à traiter
+        $moment_day_keys = ['MATIN', 'MIDI', 'APRES_MIDI', 'SOIR', 'NUIT'];
 
         foreach ($moment_day_keys as $moment_day_key) {
             if ($request->has($moment_day_key)) {
-                $moment_day_result[] = $moment_day_key;
-                $amount++;
+                $fieldName = "listbox_" . $moment_day_key;
+
+                if ($request->filled($fieldName)) {
+                    $frequencyId = $request->input($fieldName);
+
+                    TreatmentFrequency::create([
+                        'treatment_id' => $treatment->id,
+                        'frequency_id' => $frequencyId,
+                        'amount' => 1 // fixe, ou à adapter
+                    ]);
+                }
             }
         }
-
-        $result_moment_day = implode('/', $moment_day_result);
-        $frequency = Frequency::where('moment_day', $result_moment_day)->first();
-
-
-        $treatmentFrequencyData = ['amount' => $amount, 'frequency_id' => $frequency->id, 'treatment_id' => $treatment->id];
-        $treatmentFrequency = TreatmentFrequency::create($treatmentFrequencyData);
 
         return auth()->user()->role->key !== 'patient'
             ? redirect()->route('patients.index')
             : redirect()->route('treatments.index');
     }
+
 
 //    /**
 //     *
@@ -143,22 +147,47 @@ class TreatmentController extends Controller
     public function edit(Treatment $treatment)
     {
         $treatmentTypes = \App\Models\TreatmentType::all();
-        return view('treatments.edit', ['treatmentTypes' => $treatmentTypes] ,compact('treatment'));
+        $frequency_getMatin = \App\Models\Frequency::where('moment_day', 'Matin')->get();
+        $frequency_getMidi = \App\Models\Frequency::where('moment_day', 'Midi')->get();
+        $frequency_getApres_midi = \App\Models\Frequency::where('moment_day', 'Après-midi')->get();
+        $frequency_getSoir = \App\Models\Frequency::where('moment_day', 'Soir')->get();
+        $frequency_getNuit = \App\Models\Frequency::where('moment_day', 'Nuit')->get();
+
+        return view('treatments.edit', ['treatmentTypes' => $treatmentTypes, 'frequency_getMatin' => $frequency_getMatin,
+                'frequency_getMidi' => $frequency_getMidi, 'frequency_getApres_midi' => $frequency_getApres_midi,
+                'frequency_getSoir' => $frequency_getSoir, 'frequency_getNuit' => $frequency_getNuit]
+            , compact('treatment'));
     }
 
 
     public function update(UpdateTreatmentRequest $request, Treatment $treatment)
     {
-        $treatment->update($request->validated());
+        // 1. Mise à jour du traitement
+        $treatment->update(Arr::only($request->validated(), [
+            'name', 'dosage', 'start_at', 'end_at', 'patient_id', 'treatment_type_id'
+        ]));
+
+        // 2. Suppression des fréquences actuelles (pour repartir de zéro)
+        $treatment->frequencies()->delete();
+
+        // 3. Ajout des nouvelles fréquences
+        $moment_day_keys = ['MATIN', 'MIDI', 'APRES_MIDI', 'SOIR', 'NUIT'];
+
+        foreach ($moment_day_keys as $moment_day_key) {
+            if ($request->has($moment_day_key)) {
+                $selectedFrequencyId = $request->input("listbox_$moment_day_key");
+                if ($selectedFrequencyId) {
+                    \App\Models\TreatmentFrequency::create([
+                        'treatment_id' => $treatment->id,
+                        'frequency_id' => $selectedFrequencyId,
+                        'amount' => 1, // à adapter si besoin
+                    ]);
+                }
+            }
+        }
+
         return redirect()->route('treatments.index');
     }
-//
-//    /**
-//     * Remove the specified resource from storage.
-//     */
-//    public function destroy($id)
-//    {
-//        //
-//    }
+
 }
 
