@@ -18,43 +18,6 @@ class TreatmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-//    public function index(Request $request, Patient $patient = null)
-//    {
-//        $search = $request->query('search');
-//        $user = auth()->user();
-//
-//        $treatments = \App\Models\Treatment::query();
-//
-//        if ($user->role === 'e5d2e8b5-7a40-3ed6-a7e9-00d3f87c385d') {
-//                $treatments->where('user_id', $user->id);
-//
-//        } elseif ($user->role === 'autre-role-id') {
-//            if ($patient) {
-//                $treatments->where('assigned_doctor_id', $user->id);
-//            }
-//
-//        } else {
-//            if ($patient) {
-//                $treatments->where('patient_id', $patient->id);
-//            }
-//        }
-//
-//        // Requête de recherche
-//        if ($search) {
-//            $treatments->where(function ($q) use ($search) {
-//                $q->where('name', 'like', '%' . $search . '%')
-//                    ->orWhere('dosage', 'like', '%' . $search . '%')
-//                    ->orWhere('start_at', 'like', '%' . $search . '%')
-//                    ->orWhere('end_at', 'like', '%' . $search . '%');
-//            });
-//        }
-//
-//        $treatments = $treatments->paginate(10);
-//
-//        return view('treatments.index', compact('treatments', 'patient'));
-//    }
-
-
     public function index(Request $request, Patient $patient = null)
     {
         $search = $request->query('search');
@@ -104,14 +67,23 @@ class TreatmentController extends Controller
         return view('treatments.index', compact('treatments', 'patient'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
     public function create(Patient $patient)
     {
         $treatmentTypes = \App\Models\TreatmentType::all();
-        return view('treatments.create',['treatmentTypes' => $treatmentTypes],compact('patient'));
+
+        $frequency_getMatin = \App\Models\Frequency::where('moment_day', 'Matin')->get();
+        $frequency_getMidi = \App\Models\Frequency::where('moment_day', 'Midi')->get();
+        $frequency_getApres_midi = \App\Models\Frequency::where('moment_day', 'Après-midi')->get();
+        $frequency_getSoir = \App\Models\Frequency::where('moment_day', 'Soir')->get();
+        $frequency_getNuit = \App\Models\Frequency::where('moment_day', 'Nuit')->get();
+
+        return view('treatments.create',['treatmentTypes' => $treatmentTypes, 'frequency_getMatin' => $frequency_getMatin,
+            'frequency_getMidi' => $frequency_getMidi, 'frequency_getApres_midi' => $frequency_getApres_midi,
+                'frequency_getSoir' => $frequency_getSoir, 'frequency_getNuit' => $frequency_getNuit]
+            ,compact('patient'));
     }
 
 

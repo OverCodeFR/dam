@@ -15,15 +15,15 @@ class TreatmentFrequencySeeder extends Seeder
     public function run(): void
     {
         $treatmentFrequencies = [
-            ['amount' => '1', 'frequency' => FrequencyMomentDayEnum::MATIN, 'treatment' => 1],
-            ['amount' => '2', 'frequency' => FrequencyMomentDayEnum::MATIN_MIDI, 'treatment' => 2],
-            ['amount' => '3', 'frequency' => FrequencyMomentDayEnum::MATIN_MIDI_APRES_MIDI, 'treatment' => 3],
-            ['amount' => '4', 'frequency' => FrequencyMomentDayEnum::MATIN_MIDI_APRES_MIDI_SOIR, 'treatment' => 4],
-            ['amount' => '5', 'frequency' => FrequencyMomentDayEnum::MATIN_MIDI_APRES_MIDI_SOIR_NUIT, 'treatment' => 5],
+            ['amount' => '1', 'frequency' => '08:00:00', 'treatment' => 1],
+            ['amount' => '2', 'frequency' => '12:00:00', 'treatment' => 2],
+            ['amount' => '3', 'frequency' => '16:00:00', 'treatment' => 3],
+            ['amount' => '4', 'frequency' => '20:00:00', 'treatment' => 4],
+            ['amount' => '5', 'frequency' => '23:00:00', 'treatment' => 5],
         ];
 
         foreach ($treatmentFrequencies as $data) {
-            $frequency = Frequency::where('moment_day', $data['frequency']->value)->first();
+            $frequency = Frequency::where('hour', $data['frequency'])->first();
 
             TreatmentFrequency::factory()->create([
                 'amount' => $data['amount'],

@@ -56,4 +56,5 @@
             }
         });
     </script>
+
 </x-layouts.app>
