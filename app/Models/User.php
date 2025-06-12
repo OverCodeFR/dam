@@ -70,10 +70,8 @@ class User extends Authenticatable
         return $this->hasMany(Patient::class);
     }
 
-    public function patients_affiliated()
+    public function patient_user(): HasMany
     {
-        return $this->hasMany(Patient::class, 'user_id');
+        return $this->hasMany(PatientUser::class);
     }
-
-
 }

@@ -18,10 +18,9 @@ Route::view('dashboard', 'dashboard.index')
 Route::middleware(['auth'])->group(function () {
     //Patients
     Route::resource('patients', PatientController::class)->except('show');
-    Route::get('/patients/assignate', [PatientController::class, 'assignate'])->name('patients.assignate');
-    Route::post('/patients/assignate', [PatientController::class, 'assignment'])->name('patients.assignment');
 
-
+    //PatientUser
+    Route::resource('patients_users', \App\Http\Controllers\PatientUserController::class);
 
     //Treatments Types
     Route::resource('treatments_types', TreatmentTypeController::class);

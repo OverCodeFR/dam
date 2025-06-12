@@ -36,35 +36,6 @@ class PatientController extends Controller
         return view('patients.index', compact('patients'));
     }
 
-    public function assignate(Request $request)
-    {
-        $user = auth()->user();
-        $search = $request->query('search');
-
-        $patients = $user->patients_affiliated;
-
-        $aidants = User::where('role_id', 3)->get();
-
-        return view('patients.assignate', compact('patients', 'aidants'));
-    }
-
-
-    public function assignment(Request $request)
-    {
-        $validated = $request->validate([
-            'patient_id' => 'required|exists:patients,id',
-            'aidant_id' => 'required|exists:users,id',
-        ]);
-
-        $patient = Patient::findOrFail($validated['patient_id']);
-
-        $patient->aidants()->syncWithoutDetaching([$validated['aidant_id']]);
-
-        return redirect()->back();
-    }
-
-
-
 
     /**
      * Show the form for creating a new resource.
