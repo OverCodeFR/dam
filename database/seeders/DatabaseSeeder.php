@@ -28,5 +28,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(StockSeeder::class);
 
+        $this->call(PatientUserSeeder::class);
+
     }
 }

@@ -48,4 +48,10 @@ class Treatment extends Model
     {
         return $this->belongsTo(TreatmentType::class);
     }
+
+    public function frequencies()
+    {
+        return $this->hasMany(\App\Models\TreatmentFrequency::class);
+    }
+
 }

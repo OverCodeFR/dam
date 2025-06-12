@@ -6,7 +6,6 @@
     <select
         name="{{ $name }}"
         id="{{ $name }}"
-        style="display: none;"
         {{ $attributes->merge([
             'class' => 'block w-full rounded-md border ' . ($errors->has($name) ? 'border-red-500' : 'border-gray-300') . ' bg-white text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm px-3 py-1'
         ]) }}

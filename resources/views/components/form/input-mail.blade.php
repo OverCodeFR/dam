@@ -1,9 +1,9 @@
 @php
     use Illuminate\Support\Str;
 @endphp
-<div class="mb-4 w-full md:w-1/4">
-    <label for="{{ $name }}" class="block text-sm font-medium text-gray-300 mb-1">
-        {{ $label }}
+<div class="sm:col-span-3 w-2/6">
+    <label for="{{ $name }}" class="block text-sm font-medium text-gray-900">
+    {{ $label }}
     </label>
 
     <input type="email"
@@ -11,7 +11,11 @@
            value="{{ old($name, $value) }}"
            {{ $attributes }}
            required
-           class="block w-full rounded-md border @error($name) border-red-500 @else border-gray-300 @enderror bg-white text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm px-3 py-1" />
+           class="block w-full rounded-md bg-gray-300 px-3 py-1.5 text-base text-gray-900
+                   outline outline-1 -outline-offset-1 outline-gray-300
+                   placeholder:text-gray-400
+                   focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600
+                   sm:text-sm" />
 
     @error($name)
     <p class="mt-1 text-sm text-red-600">

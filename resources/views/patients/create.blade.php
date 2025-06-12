@@ -5,22 +5,21 @@
                 <strong>Erreur :</strong> Assurez-vous de remplir correctement les champs ci-dessous.
             </div>
         @endif
-        <x-form.form-header
-            title="Créer un patient"
-            description="Remplissez les champs suivants pour enregistrer un nouveau patient."
-        />
 
-        <form action="{{ route('patients.store') }}" method="POST" class="space-y-4">
+        <form action="{{ route('patients.store') }}" method="POST" class="bg-gray-200 p-6 rounded-md shadow-sm space-y-12">
             @csrf
 
-            <x-form.input-text  name="name" required autocomplete="name_patient" label="Nom complet" />
-            <x-form.input-tel   name="phone" required autocomplete="tel" label="Téléphone" />
-            <x-form.input-text  name="address" required autocomplete="address" label="Adresse" />
-            <x-form.input-mail id="email" required autocomplete="email" label="Email" />
+            <x-form.section title="Informations du patient" description="Entrez les données du patient.">
+                <x-form.input-text  name="name" id="name" required autocomplete="name_patient" label="Nom complet" />
+                <x-form.input-tel   name="phone" id="phone" required autocomplete="tel" label="Téléphone" />
+                <x-form.input-text  name="address" id="address" required autocomplete="address" label="Adresse" />
+                <x-form.input-mail id="email" name="email" required autocomplete="email" label="Email" />
+            </x-form.section>
 
-
-            <x-form.submit-button label="Créer le patient" />
-            <x-form.cancel-button/>
+            <x-form.button-group>
+                <x-form.cancel-button label="Annuler"/>
+                <x-form.submit-button label="Créer le patient" />
+            </x-form.button-group>
 
         </form>
     </div>
