@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use \App\Http\Controllers\PatientController;
@@ -11,7 +12,7 @@ Route::get('/', function () {
 })->name('home');
 
 
-Route::view('dashboard', 'dashboard.index')
+Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
@@ -30,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/treatments/{patient?}', [TreatmentController::class, 'index'])->name('treatments.index');
 
     //Stocks
-    Route::resource('dashboard', \App\Http\Controllers\DashboardController::class);
+    Route::resource('stocks', StockController::class);
 
     //Settings
     Route::redirect('settings', 'settings/profile');

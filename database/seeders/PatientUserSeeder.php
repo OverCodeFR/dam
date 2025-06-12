@@ -18,6 +18,7 @@ class PatientUserSeeder extends Seeder
             ['patient_id' => '2', 'user_id' => '2'],
             ['patient_id' => '3', 'user_id' => '3'],
             ['patient_id' => '4', 'user_id' => '4'],
+            ['patient_id' => '5', 'user_id' => null],
         ];
 
         foreach ($patientUser as $data) {

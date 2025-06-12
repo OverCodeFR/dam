@@ -7,6 +7,7 @@ use App\Models\Patient;
 use App\Models\PatientUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PatientUserController extends Controller
 {
@@ -49,19 +50,25 @@ class PatientUserController extends Controller
      */
     public function store(StorePatientUserRequest $request)
     {
-        if (
-            PatientUser::where('patient_id', $request->get('patient_id')) ||
-            PatientUser::where('user_id', $request->get('user_id'))
-        ) {
+        $patient = PatientUser::where('patient_id', $request->get('patient_id'))
+            ->whereNull('user_id')
+            ->first();
+
+        if ($patient) {
+            $patient->user_id = $request->get('user_id');
+            $patient->patient_id = (string) $patient->patient_id;
+            $patient->save();
+
+            return redirect()->back()->with('success', 'Patient assigned successfully.');
+        }
+
+        if (PatientUser::where('patient_id', $request->get('patient_id'))
+            ->where('user_id', $request->get('user_id'))
+            ->exists()) {
             return redirect()->back()->with('error', 'Patient already assigned');
         }
 
-       $patient_user = new PatientUser();
-       $patient_user->fill($request->validated());
-       $patient_user->save();
-
-
-        return redirect()->back();
+        return redirect()->back()->with('error', 'No patient assigned');
     }
 
     /**

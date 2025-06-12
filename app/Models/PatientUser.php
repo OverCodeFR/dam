@@ -13,7 +13,6 @@ class PatientUser extends Pivot
 
     /** @use HasFactory<\Database\Factories\TreatmentFrequencyFactory> */
     use HasFactory;
-    public $primaryKey = ['patient_id', 'user_id'];
     public $incrementing = false;
     public $timestamps = false;
 

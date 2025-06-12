@@ -15,11 +15,6 @@ class PatientPolicy
         return $user->role->key !== 'patient';
     }
 
-    public function viewAny_patients(User $user): bool
-    {
-        return $user->role->key !== 'helper' && $user->role->key !== 'patient';
-    }
-
     /**
      * Determine whether the user can view the model.
      */
