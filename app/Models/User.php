@@ -64,4 +64,16 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function patients()
+    {
+        return $this->hasMany(Patient::class);
+    }
+
+    public function patients_affiliated()
+    {
+        return $this->hasMany(Patient::class, 'user_id');
+    }
+
+
 }

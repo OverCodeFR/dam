@@ -5,7 +5,6 @@ use Livewire\Volt\Volt;
 use \App\Http\Controllers\PatientController;
 use \App\Http\Controllers\TreatmentController;
 use App\Http\Controllers\TreatmentTypeController;
-use App\Http\Controllers\StockController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,7 +17,11 @@ Route::view('dashboard', 'dashboard.index')
 
 Route::middleware(['auth'])->group(function () {
     //Patients
-    Route::resource('patients', PatientController::class);
+    Route::resource('patients', PatientController::class)->except('show');
+    Route::get('/patients/assignate', [PatientController::class, 'assignate'])->name('patients.assignate');
+    Route::post('/patients/assignate', [PatientController::class, 'assignment'])->name('patients.assignment');
+
+
 
     //Treatments Types
     Route::resource('treatments_types', TreatmentTypeController::class);

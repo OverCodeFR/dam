@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -37,27 +38,32 @@ class PatientController extends Controller
 
     public function assignate(Request $request)
     {
-        Gate::authorize('viewAny_patients', Patient::class);
-
         $user = auth()->user();
         $search = $request->query('search');
 
-        $patients =Patient::all();
+        $patients = $user->patients_affiliated;
 
-//        $patients = Patient::when($user->role->key !== 'admin', function ($query) use ($user) {
-//            $query->where('user_id', $user->id);
-//        })
-//            ->when($search, function ($query, $search) {
-//                $query->where(function ($q) use ($search) {
-//                    $q->where('name', 'like', '%' . $search . '%')
-//                        ->orWhere('phone', 'like', '%' . $search . '%')
-//                        ->orWhere('address', 'like', '%' . $search . '%')
-//                        ->orWhere('email', 'like', '%' . $search . '%');
-//                });
-//            })->paginate(10);
+        $aidants = User::where('role_id', 3)->get();
 
-        return view('patients.assignate', compact('patients'));
+        return view('patients.assignate', compact('patients', 'aidants'));
     }
+
+
+    public function assignment(Request $request)
+    {
+        $validated = $request->validate([
+            'patient_id' => 'required|exists:patients,id',
+            'aidant_id' => 'required|exists:users,id',
+        ]);
+
+        $patient = Patient::findOrFail($validated['patient_id']);
+
+        $patient->aidants()->syncWithoutDetaching([$validated['aidant_id']]);
+
+        return redirect()->back();
+    }
+
+
 
 
     /**
