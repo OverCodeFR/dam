@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTreatmentRequest;
 use App\Http\Requests\UpdateTreatmentRequest;
 use App\Models\Frequency;
+use App\Models\Stock;
 use App\Models\Treatment;
 use App\Models\Patient;
 use App\Models\TreatmentFrequency;
@@ -23,15 +24,15 @@ class TreatmentController extends Controller
         $search = $request->query('search');
         $user = auth()->user();
 
-        $treatments = Treatment::query();
+        $treatments = Treatment::with(['stocks', 'patient', 'treatment_type'])
+            ->withSum('stocks', 'amount');
 
         if ($user->role->key === 'patient') {
-            // Le patient lié à cet utilisateur via la colonne `user_id`
             $patientModel = Patient::where('user_id', $user->id)->first();
             if ($patientModel) {
                 $treatments->where('patient_id', $patientModel->id);
             } else {
-                $treatments->whereRaw('1 = 0'); // aucun résultat si non trouvé
+                $treatments->whereRaw('1 = 0');
             }
 
         } elseif ($user->role->key === 'admin') {
@@ -40,8 +41,8 @@ class TreatmentController extends Controller
             }
         } else {
             if (!\Illuminate\Support\Facades\Request::is('treatments/*')) {
-                $patientsIds = $user->patients()->pluck('patients.id');
-                $treatments->whereIn('patient_id', $patientsIds);
+                $patients_id = $user->patients()->pluck('patients.id');
+                $treatments->whereIn('patient_id', $patients_id);
             } else {
                 if ($patient) {
                     $treatments->where('patient_id', $patient->id);
@@ -69,7 +70,7 @@ class TreatmentController extends Controller
             });
         }
 
-        $treatments = $treatments->paginate(10);
+        $treatments = $treatments->orderBy('stocks_sum_amount', 'asc')->paginate(10);
 
         return view('treatments.index', compact('treatments', 'patient'));
     }

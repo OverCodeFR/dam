@@ -14,11 +14,7 @@ class StockController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->filled('patient')) {
-            Gate::authorize('viewAny_list', Stock::class);
-        } else  {
-            Gate::authorize('viewAny_nav', Stock::class);
-        }
+        Gate::authorize('viewAny', Stock::class);
 
         $search = $request->query('search');
         $user = auth()->user();

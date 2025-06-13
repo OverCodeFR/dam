@@ -21,11 +21,11 @@
                     @can('create', App\Models\TreatmentType::class)
                     <flux:navlist.item icon="plus" :href="route('treatments_types.create')" wire:navigate>{{ __('Ajout de type') }}</flux:navlist.item>
                     @endcan
-                    @can('viewAny_nav', \App\Models\Stock::class)
+                    @can('viewAny', \App\Models\Stock::class)
                         <flux:navlist.item icon="plus" :href="route('stocks.index')" wire:navigate>{{ __('Stock') }}</flux:navlist.item>
                     @endcan
                     @can('create', App\Models\PatientUser::class)
-                        <flux:navlist.item icon="user" :href="route('patients_users.create')" wire:navigate>{{ __('Assignation de patient') }}</flux:navlist.item>
+                        <flux:navlist.item icon="user" :href="route('patient_user.create')" wire:navigate>{{ __('Assignation de patient') }}</flux:navlist.item>
                     @endcan
                 </flux:navlist.group>
             </flux:navlist>

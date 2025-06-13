@@ -12,14 +12,9 @@ class StockPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny_nav(User $user): bool
+    public function viewAny(User $user): bool
     {
         return in_array($user->role->key, ['admin', 'patient']);
-    }
-
-    public function viewAny_list(User $user): bool
-    {
-        return Request::is('patients') || Request::filled('patient');
     }
 
     /**

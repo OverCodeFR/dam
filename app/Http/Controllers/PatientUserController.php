@@ -30,21 +30,21 @@ class PatientUserController extends Controller
         $user = auth()->user();
 
         if ($user->role->key === 'admin') {
-            $patients = PatientUser::with('patient')
-                ->whereNull('user_id')
-                ->get();
-            $health_users = User::where('role_id', 2)->get();
+            $patients = Patient::whereNull('user_id')->get();
+            $healthcare = User::where('role_id', 2)->get();
+            $helper = User::where('role_id', 3)->get();
         } elseif ($user->role->key === 'healthcare') {
             $patients = PatientUser::with('patient')
                 ->where('user_id', $user->id)
                 ->get();
-            $health_users = User::where('role_id', 3)->get();
+            $healthcare = null;
+            $helper = User::where('role_id', 3)->get();
         } else {
             abort(403);
         }
 
 
-        return view('patients.assignate', compact('patients', 'health_users'));
+        return view('patient_user.index', compact('patients', 'healthcare', 'helper'));
     }
 
 
@@ -55,29 +55,38 @@ class PatientUserController extends Controller
     {
         Gate::authorize('create', PatientUser::class);
 
-        $patient = PatientUser::where('patient_id', $request->get('patient_id'))
-            ->whereNull('user_id')
-            ->first();
+        $patient_id = $request->get('patient_id');
+        $healthcare_id = $request->get('healthcare_id');
+        $helper_id = $request->get('helper_id');
 
-        if ($patient) {
-            $patient->user_id = $request->get('user_id');
-            $patient->patient_id = (string) $patient->patient_id;
-            $patient->save();
+        $existing = PatientUser::where('patient_id', $patient_id)
+            ->where(function ($query) use ($healthcare_id, $helper_id) {
+                $query->where('user_id', $healthcare_id)
+                    ->orWhere('user_id', $helper_id);
+            })
+            ->exists();
 
-            return redirect()->back()->with('success', 'Patient assigned successfully.');
+        if ($existing) {
+            return redirect()->back()->with('error', 'Patient already assigned to one of the selected users');
         }
 
-        if (PatientUser::where('patient_id', $request->get('patient_id'))
-            ->where('user_id', $request->get('user_id'))->first()) {
-
-            return redirect()->back()->with('error', 'Patient already assigned');
+        if ($healthcare_id) {
+            PatientUser::create([
+                'patient_id' => $patient_id,
+                'user_id' => $healthcare_id,
+            ]);
         }
-        $patient = new PatientUser();
-        $patient->fill($request->validated());
-        $patient->save();
 
-        return redirect()->back()->with('error', 'No patient assigned');
+        if ($helper_id) {
+            PatientUser::create([
+                'patient_id' => $patient_id,
+                'user_id' => $helper_id,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Patient assigned successfully.');
     }
+
 
     /**
      * Display the specified resource.
