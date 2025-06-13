@@ -68,14 +68,13 @@ class PatientUserController extends Controller
         }
 
         if (PatientUser::where('patient_id', $request->get('patient_id'))
-            ->where('user_id', $request->get('user_id'))
-            ->exists()) {
+            ->where('user_id', $request->get('user_id'))->first()) {
+
             return redirect()->back()->with('error', 'Patient already assigned');
         }
-
-//        $patient = new PatientUser();
-//        $patient->fill($request->validated());
-//        $patient->save();
+        $patient = new PatientUser();
+        $patient->fill($request->validated());
+        $patient->save();
 
         return redirect()->back()->with('error', 'No patient assigned');
     }

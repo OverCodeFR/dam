@@ -1,4 +1,3 @@
-{{$errors}}
 <x-layouts.app>
     <form action="{{ route('patients_users.store') }}" method="POST" class="bg-gray-200 p-6 rounded-md shadow-sm space-y-12">
      @csrf
