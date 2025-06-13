@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 use App\Models\Patient;
-use App\Models\User;
+use App\Models\PatientUser;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -21,10 +22,15 @@ class PatientController extends Controller
         $user = auth()->user();
         $search = $request->query('search');
 
-        $patients = Patient::when($user->role->key !== 'admin', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        })
-            ->when($search, function ($query, $search) {
+        if ($user->role->key === 'admin') {
+            $patients = Patient::query();
+        } else {
+            $patients = Patient::whereHas('users', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+        }
+
+        $patients = $patients->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'like', '%' . $search . '%')
                         ->orWhere('phone', 'like', '%' . $search . '%')

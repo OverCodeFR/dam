@@ -36,7 +36,7 @@ class PatientPolicy
      */
     public function update(User $user, Patient $patient): bool
     {
-        return $user->role->key === 'admin' || ($user->role->key !== 'helper' && $patient->user_id === $user->id);
+        return $user->role->key === 'admin' || $patient->user_id === $user->id || $patient->users->contains($user->id);
     }
 
     public function showButton(User $user): bool
