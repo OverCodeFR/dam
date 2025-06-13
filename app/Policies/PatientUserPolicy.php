@@ -13,7 +13,7 @@ class PatientUserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role->key !== 'helper' && $user->role->key !== 'patient';
+        return false;
     }
 
     /**
@@ -29,7 +29,7 @@ class PatientUserPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->role->key !== 'helper' && $user->role->key !== 'patient';
     }
 
     /**

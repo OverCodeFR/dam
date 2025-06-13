@@ -24,7 +24,7 @@
                     @can('viewAny_nav', \App\Models\Stock::class)
                         <flux:navlist.item icon="plus" :href="route('stocks.index')" wire:navigate>{{ __('Stock') }}</flux:navlist.item>
                     @endcan
-                    @can('viewAny', App\Models\PatientUser::class)
+                    @can('create', App\Models\PatientUser::class)
                         <flux:navlist.item icon="user" :href="route('patients_users.create')" wire:navigate>{{ __('Assignation de patient') }}</flux:navlist.item>
                     @endcan
                 </flux:navlist.group>

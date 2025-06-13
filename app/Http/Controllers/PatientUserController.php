@@ -7,6 +7,7 @@ use App\Models\Patient;
 use App\Models\PatientUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 
 class PatientUserController extends Controller
@@ -24,6 +25,8 @@ class PatientUserController extends Controller
      */
     public function create(Request $request)
     {
+        Gate::authorize('create', PatientUser::class);
+
         $user = auth()->user();
 
         if ($user->role->key === 'admin') {
@@ -50,6 +53,8 @@ class PatientUserController extends Controller
      */
     public function store(StorePatientUserRequest $request)
     {
+        Gate::authorize('create', PatientUser::class);
+
         $patient = PatientUser::where('patient_id', $request->get('patient_id'))
             ->whereNull('user_id')
             ->first();
@@ -67,6 +72,10 @@ class PatientUserController extends Controller
             ->exists()) {
             return redirect()->back()->with('error', 'Patient already assigned');
         }
+
+//        $patient = new PatientUser();
+//        $patient->fill($request->validated());
+//        $patient->save();
 
         return redirect()->back()->with('error', 'No patient assigned');
     }
