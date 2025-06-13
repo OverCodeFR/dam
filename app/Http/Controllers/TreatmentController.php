@@ -23,24 +23,29 @@ class TreatmentController extends Controller
         $search = $request->query('search');
         $user = auth()->user();
 
-        $treatments = \App\Models\Treatment::query();
+        $treatments = Treatment::query();
 
         if ($user->role->key === 'patient') {
-            $patient_id = Patient::where('user_id', $user->id)->first();
-            $treatments->where('patient_id', $patient_id->id);
+            // Le patient lié à cet utilisateur via la colonne `user_id`
+            $patientModel = Patient::where('user_id', $user->id)->first();
+            if ($patientModel) {
+                $treatments->where('patient_id', $patientModel->id);
+            } else {
+                $treatments->whereRaw('1 = 0'); // aucun résultat si non trouvé
+            }
 
         } elseif ($user->role->key === 'admin') {
-            if (is_null($patient)) {
-                $treatments = Treatment::query();
-            } else {
+            if (!is_null($patient)) {
                 $treatments->where('patient_id', $patient->id);
             }
         } else {
             if (!\Illuminate\Support\Facades\Request::is('treatments/*')) {
-                $patients_id = Patient::where('user_id', $user->id)->pluck('id');
-                $treatments->whereIn('patient_id', $patients_id);
+                $patientsIds = $user->patients()->pluck('patients.id');
+                $treatments->whereIn('patient_id', $patientsIds);
             } else {
-                $treatments->where('patient_id', $patient->id);
+                if ($patient) {
+                    $treatments->where('patient_id', $patient->id);
+                }
             }
         }
 
