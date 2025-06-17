@@ -1,4 +1,5 @@
 <x-layouts.app>
+
     <x-table.page-header
         title="Stocks"
         description="Liste de tous les stocks des traitements"
@@ -13,7 +14,12 @@
                         <tr>
                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $stock->treatment->name }}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $stock->treatment->treatment_type->name }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $stock->amount }}</td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                <a href="{{ route('stocks.edit', $stock->id) }}" class="text-blue-600 hover:underline">
+                                    {{ $stock->amount }}
+                                </a>
+                            </td>
+
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $stock->treatment->patient->name }}</td>
                             <td>
                                 <a href="{{ route('treatments.edit',$stock->treatment->id) }}"

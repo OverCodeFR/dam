@@ -38,7 +38,7 @@ class StockPolicy
      */
     public function update(User $user, Stock $stock): bool
     {
-        return false;
+        return in_array($user->role->key, ['admin', 'patient']);
     }
 
     /**

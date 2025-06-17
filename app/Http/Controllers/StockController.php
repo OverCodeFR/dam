@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateStockRequest;
 use App\Models\Patient;
 use App\Models\Stock;
 use Illuminate\Http\Request;
@@ -86,16 +87,19 @@ class StockController extends Controller
      */
     public function edit(Stock $stock)
     {
-        //
+        Gate::authorize('update', Stock::class);
+        return view('stocks.edit', compact('stock'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Stock $stock)
+    public function update(UpdateStockRequest $request, Stock $stock)
     {
-        //
+        Gate::authorize('update', Stock::class);
+        $stock->update($request->validated());
+
+        return redirect()->route('stocks.index');
     }
+
+
 
     /**
      * Remove the specified resource from storage.

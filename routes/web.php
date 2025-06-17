@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     //Stocks
     Route::resource('stocks', StockController::class);
 
+
     //Settings
     Route::redirect('settings', 'settings/profile');
 
