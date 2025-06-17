@@ -2,7 +2,7 @@
     use Illuminate\Support\Str;
 @endphp
 
-<div class="mb-4 w-full md:w-1/4" id="{{$id}}">
+<div class="mb-4 w-full md:w-1/4 hidden" id="{{$id}}">
     <select
         name="{{ $name }}"
         id="{{ $name }}"

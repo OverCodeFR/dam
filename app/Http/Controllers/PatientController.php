@@ -9,6 +9,7 @@ use App\Models\PatientUser;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class PatientController extends Controller
 {
@@ -63,6 +64,9 @@ class PatientController extends Controller
         $patient = new Patient();
         $patient->fill($request->validated());
         $patient->save();
+
+        $token = $patient->createToken('access_token')->plainTextToken;
+        Log::info($token);
 
         return redirect()->route('patients.index');
     }

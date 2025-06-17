@@ -23,7 +23,8 @@ class StorePatientUserRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            'healthcare_id' => 'exists:users,id',
+            'helper_id' => 'required|exists:users,id',
         ];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PatientUserController;
 use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -21,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('patients', PatientController::class)->except('show');
 
     //PatientUser
-    Route::resource('patients_users', \App\Http\Controllers\PatientUserController::class);
+    Route::resource('patient_user', PatientUserController::class);
 
     //Treatments Types
     Route::resource('treatments_types', TreatmentTypeController::class);

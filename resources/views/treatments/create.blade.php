@@ -19,16 +19,7 @@
             </x-form.section>
 
             <x-form.section title="Fréquences" description="Quand le traitement doit être administré ?"><fieldset>
-                    <legend class="text-sm/6 font-semibold text-gray-900">Fréquences</legend>
-
-                    <div class="mt-6 space-y-6">
-                        <x-form.radio id="periodic" name="frequency" value="periodic" label="Périodique" checked="true" onchange="toggleFields()"/>
-                        <x-form.radio id="planned" name="frequency" value="planned" label="Planifier" onchange="toggleFields()"/>
-                    </div>
-
-                    <x-form.input-hour-interval id="periodic-field" name="interval" min="1" max="24" label="À quel intervalle d'heures est-ce que cela se produit ?" placeholder="Ex: 1"/>
-
-                    <div id="planned-field" class="mt-4 hidden">
+                    <div id="planned-field" class="mt-4">
                         <label class="block text-sm font-medium text-gray-700">Moments de la journée</label>
                         <div class="mt-2 space-y-2">
 
@@ -62,7 +53,6 @@
                 </fieldset>
             </x-form.section>
 
-
             <x-form.button-group>
                 <x-form.cancel-button label="Annuler"/>
                 <x-form.submit-button label="Créer le traitement" />
@@ -87,12 +77,6 @@
         });
     </script>
     <script>
-        function toggleFields() {
-            const isPeriodic = document.getElementById('periodic').checked;
-            document.getElementById('periodic-field').style.display = isPeriodic ? 'block' : 'none';
-            document.getElementById('planned-field').style.display = isPeriodic ? 'none' : 'block';
-        }
-
         function toggleTextbox(name) {
             const checkbox = document.getElementById(name);
             const listboxDiv = document.getElementById(`listbox_${name}`);
