@@ -26,28 +26,32 @@
                             <div class="flex items-center gap-2">
                                 <x-form.checkbox id="MATIN" name="MATIN" label="Matin" onchange="toggleTextbox('MATIN')" />
                                 <x-form.moment-day-list id="listbox_MATIN" name="listbox_MATIN" :options="$frequency_getMatin->pluck('hour', 'id')" :value="old('listbox_MATIN')"/>
+                                <x-form.input-number-frequency id="inputbox_MATIN" name="inputbox_MATIN" min="0" label="Ajouter une quantité" :value="old('number_MATIN')"/>
                             </div>
 
                             <div class="flex items-center gap-2">
                                 <x-form.checkbox name="MIDI" label="Midi" onchange="toggleTextbox('MIDI')" />
                                 <x-form.moment-day-list id="listbox_MIDI" name="listbox_MIDI" :options="$frequency_getMidi->pluck('hour', 'id')" :value="old('list_MIDI')"/>
+                                <x-form.input-number-frequency id="inputbox_MIDI" name="inputbox_MIDI" min="0" label="Ajouter une quantité" :value="old('number_MIDI')"/>
                             </div>
 
                             <div class="flex items-center gap-2">
                                 <x-form.checkbox name="APRES_MIDI" label="Après-midi" onchange="toggleTextbox('APRES_MIDI')" />
                                 <x-form.moment-day-list id="listbox_APRES_MIDI" name="listbox_APRES_MIDI" :options="$frequency_getApres_midi->pluck('hour', 'id')" :value="old('list_APRES_MIDI')"/>
+                                <x-form.input-number-frequency id="inputbox_APRES_MIDI" name="inputbox_APRES_MIDI" min="0" label="Ajouter une quantité" :value="old('number_APRES_MIDI')"/>
                             </div>
 
                             <div class="flex items-center gap-2">
                                 <x-form.checkbox name="SOIR" label="Soir" onchange="toggleTextbox('SOIR')" />
                                 <x-form.moment-day-list id="listbox_SOIR" name="listbox_SOIR" :options="$frequency_getSoir->pluck('hour', 'id')" :value="old('list_SOIR')"/>
+                                <x-form.input-number-frequency id="inputbox_SOIR" name="inputbox_SOIR" min="0" label="Ajouter une quantité" :value="old('inputbox_SOIR')"/>
                             </div>
 
                             <div class="flex items-center gap-2">
                                 <x-form.checkbox name="NUIT" label="Nuit" onchange="toggleTextbox('NUIT')" />
                                 <x-form.moment-day-list id="listbox_NUIT" name="listbox_NUIT" :options="$frequency_getNuit->pluck('hour', 'id')" :value="old('list_NUIT')"/>
+                                <x-form.input-number-frequency id="inputbox_NUIT" name="inputbox_NUIT" min="0" label="Ajouter une quantité" :value="old('inputbox_NUIT')"/>
                             </div>
-
                         </div>
                     </div>
                 </fieldset>
@@ -80,7 +84,9 @@
         function toggleTextbox(name) {
             const checkbox = document.getElementById(name);
             const listboxDiv = document.getElementById(`listbox_${name}`);
-            listboxDiv.style.display = checkbox.checked ? 'block' : 'none'; }
+            const inputboxDiv = document.getElementById(`inputbox_${name}`);
+            listboxDiv.style.display = checkbox.checked ? 'block' : 'none';
+            inputboxDiv.style.display = checkbox.checked ? 'block' : 'none'; }
 
         toggleFields();
         document.addEventListener('DOMContentLoaded', () => {

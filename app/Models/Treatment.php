@@ -55,7 +55,7 @@ class Treatment extends Model
     }
 
 
-    public function frequencies()
+    public function treatment_frequencies()
     {
         return $this->hasMany(\App\Models\TreatmentFrequency::class);
     }

@@ -65,7 +65,7 @@ class PatientController extends Controller
         $patient->fill($request->validated());
         $patient->save();
 
-        $token = $patient->createToken('access_token')->plainTextToken;
+        $token = $patient->createToken('api_token')->plainTextToken;
         Log::info($token);
 
         return redirect()->route('patients.index');

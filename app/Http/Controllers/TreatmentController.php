@@ -111,15 +111,17 @@ class TreatmentController extends Controller
 
         foreach ($moment_day_keys as $moment_day_key) {
             if ($request->has($moment_day_key)) {
-                $fieldName = "listbox_" . $moment_day_key;
+                $frequency = "listbox_" . $moment_day_key;
+                $amount = "inputbox_" . $moment_day_key;
 
-                if ($request->filled($fieldName)) {
-                    $frequencyId = $request->input($fieldName);
+                if ($request->filled($frequency) and $request->filled($amount) ) {
+                    $frequencyId = $request->input($frequency);
+                    $amount = $request->input($amount);
 
                     TreatmentFrequency::create([
                         'treatment_id' => $treatment->id,
                         'frequency_id' => $frequencyId,
-                        'amount' => 1 // fixe, ou à adapter
+                        'amount' => $amount,
                     ]);
                 }
             }
@@ -130,18 +132,9 @@ class TreatmentController extends Controller
             : redirect()->route('treatments.index');
     }
 
-
-//    /**
-//     *
-//     */
-//    public function check(UpdateItemRequest $request, $id)
-//    {
-//        //
-//    }
-//
-//    /**
-//     * Display the specified resource.
-//     */
+    /**
+     * Display the specified resource.
+     */
     public function show(Request $request)
     {
         //
@@ -174,19 +167,24 @@ class TreatmentController extends Controller
         ]));
 
         // 2. Suppression des fréquences actuelles (pour repartir de zéro)
-        $treatment->frequencies()->delete();
+        $treatment->treatment_frequencies()->delete();
 
         // 3. Ajout des nouvelles fréquences
         $moment_day_keys = ['MATIN', 'MIDI', 'APRES_MIDI', 'SOIR', 'NUIT'];
 
         foreach ($moment_day_keys as $moment_day_key) {
             if ($request->has($moment_day_key)) {
-                $selectedFrequencyId = $request->input("listbox_$moment_day_key");
-                if ($selectedFrequencyId) {
-                    \App\Models\TreatmentFrequency::create([
+                $frequency = "listbox_" . $moment_day_key;
+                $amount = "inputbox_" . $moment_day_key;
+
+                if ($request->filled($frequency) and $request->filled($amount) ) {
+                    $frequencyId = $request->input($frequency);
+                    $amount = $request->input($amount);
+
+                    TreatmentFrequency::create([
                         'treatment_id' => $treatment->id,
-                        'frequency_id' => $selectedFrequencyId,
-                        'amount' => 1, // à adapter si besoin
+                        'frequency_id' => $frequencyId,
+                        'amount' => $amount,
                     ]);
                 }
             }
