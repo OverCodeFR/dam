@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class TreatmentFrequency extends Pivot
 {
+    protected $table = 'treatment_frequencies';
+
+    /** @use HasFactory<\Database\Factories\TreatmentFrequencyFactory> */
+    use HasFactory;
     public $primaryKey = ['treatment_id', 'frequency_id'];
     public $incrementing = false;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -17,14 +23,16 @@ class TreatmentFrequency extends Pivot
      */
     protected $fillable = [
         'amount',
+        'frequency_id',
+        'treatment_id',
     ];
 
-    protected function frequency(): BelongsTo
+    public function frequency(): BelongsTo
     {
         return $this->belongsTo(Frequency::class);
     }
 
-    protected function treatment(): BelongsTo
+    public function treatment(): BelongsTo
     {
         return $this->belongsTo(Treatment::class);
     }

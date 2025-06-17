@@ -26,6 +26,7 @@ class StoreTreatmentRequest extends FormRequest
             'start_at' => 'required|date',
             'end_at' => 'required|date',
             'patient_id' => 'required|string',
+            'treatment_type_id' => 'required|string',
         ];
     }
 }

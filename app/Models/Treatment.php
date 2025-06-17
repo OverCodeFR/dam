@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Treatment extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,6 +21,7 @@ class Treatment extends Model
         'start_at',
         'end_at',
         'patient_id',
+        'treatment_type_id',
     ];
 
     public $timestamps = false;
@@ -39,4 +43,15 @@ class Treatment extends Model
     {
         return $this->belongsTo(Patient::class);
     }
+
+    public function treatment_type(): BelongsTo
+    {
+        return $this->belongsTo(TreatmentType::class);
+    }
+
+    public function frequencies()
+    {
+        return $this->hasMany(\App\Models\TreatmentFrequency::class);
+    }
+
 }

@@ -15,8 +15,7 @@ return new class extends Migration
         Schema::create('treatment_types', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('name');
-            $table->string('module');
-            $table->foreignIdFor(Treatment::class)->constrained()->cascadeOnDelete();
+            $table->enum('module', array_column(\App\TreatmentTypeModuleEnum::cases(), 'value'));
         });
     }
 

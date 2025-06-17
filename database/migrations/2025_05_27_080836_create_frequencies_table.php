@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('frequencies', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('moment_day');
+            $table->time('hour');
         });
     }
 
