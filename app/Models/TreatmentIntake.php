@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Treatment extends Model
+class TreatmentIntake extends Model
 {
     use HasFactory;
 
@@ -16,13 +16,10 @@ class Treatment extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'dosage',
-        'start_at',
-        'end_at',
+        'taken_at',
+        'amount',
         'patient_id',
-        'treatment_type_id',
-        'is_done',
+        'treatment_id',
     ];
 
     public $timestamps = false;
@@ -35,8 +32,7 @@ class Treatment extends Model
     protected function casts(): array
     {
         return [
-            'start_at' => 'date',
-            'end_at' => 'date',
+            'taken_at' => 'date',
         ];
     }
 
@@ -45,20 +41,8 @@ class Treatment extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function treatment_type(): BelongsTo
+    public function treatment(): BelongsTo
     {
-        return $this->belongsTo(TreatmentType::class);
+        return $this->belongsTo(Treatment::class);
     }
-
-    public function stocks()
-    {
-        return $this->hasMany(Stock::class);
-    }
-
-
-    public function treatment_frequencies()
-    {
-        return $this->hasMany(\App\Models\TreatmentFrequency::class);
-    }
-
 }

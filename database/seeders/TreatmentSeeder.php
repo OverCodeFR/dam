@@ -13,11 +13,11 @@ class TreatmentSeeder extends Seeder
     public function run(): void
     {
         $treatments = [
-            ['name' => 'Sabril', 'dosage' => '500', 'start_at' => '2025-06-03', 'end_at' => '2025-06-13', 'patient_id' => 1, 'treatment_type_id' => '1'],
-            ['name' => 'Palafar', 'dosage' => '300', 'start_at' => '2025-06-04', 'end_at' => '2025-06-22', 'patient_id' => 2, 'treatment_type_id' => '2'],
-            ['name' => 'Calcium', 'dosage' => '500', 'start_at' => '2025-06-05', 'end_at' => '2025-07-03', 'patient_id' => 3, 'treatment_type_id' => '3'],
-            ['name' => 'Nalcrom ', 'dosage' => '100', 'start_at' => '2025-06-01', 'end_at' => '2025-08-03', 'patient_id' => 1, 'treatment_type_id' => '4'],
-            ['name' => 'Ozempic ', 'dosage' => '10', 'start_at' => '2025-06-06', 'end_at' => '2025-08-30', 'patient_id' => 4, 'treatment_type_id' => '4'],
+            ['name' => 'Sabril', 'dosage' => '500', 'start_at' => '2025-06-03', 'end_at' => '2025-06-13', 'patient_id' => 1, 'treatment_type_id' => '1', 'is_done' => false],
+            ['name' => 'Palafar', 'dosage' => '300', 'start_at' => '2025-06-04', 'end_at' => '2025-06-22', 'patient_id' => 2, 'treatment_type_id' => '2', 'is_done' => false],
+            ['name' => 'Calcium', 'dosage' => '500', 'start_at' => '2025-06-05', 'end_at' => '2025-07-03', 'patient_id' => 3, 'treatment_type_id' => '3', 'is_done' => false],
+            ['name' => 'Nalcrom ', 'dosage' => '100', 'start_at' => '2025-06-01', 'end_at' => '2025-08-03', 'patient_id' => 1, 'treatment_type_id' => '4', 'is_done' => false],
+            ['name' => 'Ozempic ', 'dosage' => '10', 'start_at' => '2025-06-06', 'end_at' => '2025-08-30', 'patient_id' => 4, 'treatment_type_id' => '4', 'is_done' => false],
         ];
 
         foreach ($treatments as $data) {
@@ -29,6 +29,7 @@ class TreatmentSeeder extends Seeder
                 'end_at' => $data['end_at'],
                 'patient_id' => $data['patient_id'],
                 'treatment_type_id' => $data['treatment_type_id'],
+                'is_done' => false
             ]);
         }
     }
