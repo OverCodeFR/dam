@@ -14,8 +14,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('treatment_intakes', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->string('taken_at');
+            $table->id();
+            $table->dateTime('taken_at')->useCurrent();
             $table->float('amount');
             $table->foreignIdFor(Patient::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Treatment::class)->constrained()->cascadeOnDelete();

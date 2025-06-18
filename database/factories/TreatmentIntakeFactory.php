@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TreatmentIntakeFactory extends Factory
 {
-    protected $model = \App\Models\TreatmentIntake::class;
-
     public function definition(): array
     {
         return [

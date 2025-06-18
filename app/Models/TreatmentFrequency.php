@@ -27,9 +27,9 @@ class TreatmentFrequency extends Pivot
         'treatment_id',
     ];
 
-    public function frequency(): BelongsTo
+    public function frequencies()
     {
-        return $this->belongsTo(Frequency::class);
+        return $this->belongsTo(Frequency::class, 'frequency_id');
     }
 
     public function treatment(): BelongsTo
