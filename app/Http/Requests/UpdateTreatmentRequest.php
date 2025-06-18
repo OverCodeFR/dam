@@ -24,6 +24,7 @@ class UpdateTreatmentRequest extends FormRequest
         return [
             'name' => 'required|string',
             'dosage' => 'required|string',
+            'unit' => 'required|string',
             'start_at' => 'required|date',
             'end_at' => 'required|date',
             'treatment_type_id' => 'required|string',

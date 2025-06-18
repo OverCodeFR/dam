@@ -26,7 +26,7 @@
                         @foreach($treatments as $treatment)
                             <tr>
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $treatment->name }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->dosage }}</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->dosage }} {{ $treatment->unit }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->start_at ? $treatment->start_at->format('d/m/Y') : '—' }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->end_at ? $treatment->end_at->format('d/m/Y') : '—' }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->patient->name ?? '—' }}</td>

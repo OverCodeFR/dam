@@ -23,6 +23,7 @@ class StoreTreatmentRequest extends FormRequest
         return [
             'name' => 'required|string',
             'dosage' => 'required|string',
+            'unit' => 'required|string',
             'start_at' => 'required|date',
             'end_at' => 'required|date',
             'patient_id' => 'required|string',

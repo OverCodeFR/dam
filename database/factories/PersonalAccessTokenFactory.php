@@ -20,6 +20,7 @@ class PersonalAccessTokenFactory extends Factory
         return [
             'tokenable_type' => 'App\Models\Patient',
             'tokenable_id' => Patient::factory(),
+            'name' => fake()->name(),
             'token' => fake()->sha256(),
             'abilities' => '["*"]',
             'last_used_at' => fake()->dateTime(),

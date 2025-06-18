@@ -87,13 +87,13 @@ class StockController extends Controller
      */
     public function edit(Stock $stock)
     {
-        Gate::authorize('update', Stock::class);
+        Gate::authorize('update', $stock);
         return view('stocks.edit', compact('stock'));
     }
 
     public function update(UpdateStockRequest $request, Stock $stock)
     {
-        Gate::authorize('update', Stock::class);
+        Gate::authorize('update', $stock);
         $stock->update($request->validated());
 
         return redirect()->route('stocks.index');

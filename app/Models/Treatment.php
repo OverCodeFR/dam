@@ -18,6 +18,7 @@ class Treatment extends Model
     protected $fillable = [
         'name',
         'dosage',
+        'unit',
         'start_at',
         'end_at',
         'patient_id',
@@ -54,7 +55,6 @@ class Treatment extends Model
     {
         return $this->hasMany(Stock::class);
     }
-
 
     public function treatment_frequencies()
     {

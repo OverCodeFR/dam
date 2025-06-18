@@ -58,6 +58,7 @@ class TreatmentController extends Controller
             $treatments->where(function ($q) use ($search, $patients, $treatment_types) {
                 $q->where('name', 'like', '%' . $search . '%')
                     ->orWhere('dosage', 'like', '%' . $search . '%')
+                    ->orWhere('unit', 'like', '%' . $search . '%')
                     ->orWhere('start_at', 'like', '%' . $search . '%')
                     ->orWhere('end_at', 'like', '%' . $search . '%');
 
@@ -100,11 +101,13 @@ class TreatmentController extends Controller
      */
     public function store(StoreTreatmentRequest $request)
     {
-        // 1. Création du traitement
         $treatmentData = Arr::only($request->validated(), [
-            'name', 'dosage', 'start_at', 'end_at', 'patient_id', 'treatment_type_id'
+            'name','dosage','unit', 'start_at', 'end_at', 'patient_id', 'treatment_type_id'
         ]);
         $treatment = Treatment::create($treatmentData);
+        Stock::create(['amount' => 0, 'treatment_id' => $treatment->id]);
+
+
 
         // 2. Liste des moments de la journée à traiter
         $moment_day_keys = ['MATIN', 'MIDI', 'APRES_MIDI', 'SOIR', 'NUIT'];
@@ -163,7 +166,7 @@ class TreatmentController extends Controller
     {
         // 1. Mise à jour du traitement
         $treatment->update(Arr::only($request->validated(), [
-            'name', 'dosage', 'start_at', 'end_at', 'patient_id', 'treatment_type_id'
+            'name', 'dosage','unit', 'start_at', 'end_at', 'patient_id', 'treatment_type_id'
         ]));
 
         // 2. Suppression des fréquences actuelles (pour repartir de zéro)

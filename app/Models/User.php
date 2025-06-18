@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use App\Models\PersonalAccessToken;
 
 class User extends Authenticatable
 {
@@ -79,5 +81,10 @@ class User extends Authenticatable
     public function patient_user(): HasMany
     {
         return $this->hasMany(PatientUser::class);
+    }
+
+    public function token(): MorphOne
+    {
+        return $this->morphOne(PersonalAccessToken::class, 'tokenable');
     }
 }

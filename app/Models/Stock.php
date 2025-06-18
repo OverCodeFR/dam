@@ -16,6 +16,7 @@ class Stock extends Model
      */
     protected $fillable = [
         'amount',
+        'treatment_id',
     ];
 
     public $timestamps = false;

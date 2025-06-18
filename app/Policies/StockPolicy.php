@@ -38,7 +38,8 @@ class StockPolicy
      */
     public function update(User $user, Stock $stock): bool
     {
-        return in_array($user->role->key, ['admin', 'patient']);
+//        dd($stock);
+        return ($user->role->key === 'admin') || ($user->role->key === 'patient' and $stock->treatment->patient->user_id  === $user->id);
     }
 
     /**

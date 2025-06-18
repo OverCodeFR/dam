@@ -12,6 +12,7 @@
             <x-form.section title="Informations du traitement" description="Entrez les données du traitement.">
                 <x-form.input-text name="name" label="Nom" />
                 <x-form.input-number name="dosage" label="Dosage" />
+                <x-form.input-text name="unit" label="Unité" />
                 <x-form.input-date name="start_at" label="Date de début" />
                 <x-form.input-date name="end_at" label="Date de fin" />
                 <x-form.type-list name="treatment_type_id" label="Type de traitement" :options="$treatmentTypes->pluck('name', 'id')" :value="old('treatment_type_id')" />

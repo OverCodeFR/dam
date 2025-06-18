@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use App\Models\PersonalAccessToken;
 
 class PatientUser extends Pivot
 
@@ -34,5 +36,10 @@ class PatientUser extends Pivot
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function token(): MorphOne
+    {
+        return $this->morphOne(PersonalAccessToken::class, 'tokenable');
     }
 }
