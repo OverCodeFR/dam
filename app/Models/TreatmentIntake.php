@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TreatmentIntake extends Model
 {
+    /** @use HasFactory<\Database\Factories\TreatmentIntakeFactory> */
     use HasFactory;
+
+    protected $table = 'treatment_intakes';
 
     /**
      * The attributes that are mass assignable.
@@ -23,18 +26,6 @@ class TreatmentIntake extends Model
     ];
 
     public $timestamps = false;
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'taken_at' => 'date',
-        ];
-    }
 
     public function patient(): BelongsTo
     {

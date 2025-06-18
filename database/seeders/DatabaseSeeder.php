@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
 
 //        $this->call(PersonalAccessTokenSeeder::class);
 
-        $this->call(TreatmentIntake::class);
+        $this->call(TreatmentIntakeSeeder::class);
 
     }
 }

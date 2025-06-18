@@ -32,8 +32,8 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->patient->name ?? '—' }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $treatment->treatment_type->name ?? '—' }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    @if($treatment->stocks->count())
-                                        {{ $treatment->stocks->sum('amount') }}
+                                    @if($treatment->stock->count())
+                                        {{ $treatment->stock->sum('amount') }}
                                     @else
                                         —
                                     @endif

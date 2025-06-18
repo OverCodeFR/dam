@@ -34,12 +34,12 @@ class Patient extends Authenticatable
         return $this->belongsTo(User::class);
     }
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'patient_user');
-    }
+//    public function users()
+//    {
+//        return $this->belongsToMany(User::class, 'patient_user');
+//    }
 
-    public function patient_user(): HasMany
+    public function patient_users(): HasMany
     {
         return $this->hasMany(PatientUser::class);
     }

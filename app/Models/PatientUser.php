@@ -26,12 +26,12 @@ class PatientUser extends Pivot
         'user_id',
     ];
 
-    public function patient(): BelongsTo
+    public function patients(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
     }
 
-    public function user(): BelongsTo
+    public function users(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

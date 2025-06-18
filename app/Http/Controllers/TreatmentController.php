@@ -24,8 +24,8 @@ class TreatmentController extends Controller
         $search = $request->query('search');
         $user = auth()->user();
 
-        $treatments = Treatment::with(['stocks', 'patient', 'treatment_type'])
-            ->withSum('stocks', 'amount');
+        $treatments = Treatment::with(['stock', 'patient', 'treatment_type'])
+            ->withSum('stock', 'amount');
 
         if ($user->role->key === 'patient') {
             $patientModel = Patient::where('user_id', $user->id)->first();
@@ -41,7 +41,7 @@ class TreatmentController extends Controller
             }
         } else {
             if (!\Illuminate\Support\Facades\Request::is('treatments/*')) {
-                $patients_id = $user->patients()->pluck('patients.id');
+                $patients_id = $user->patient()->pluck('patients.id');
                 $treatments->whereIn('patient_id', $patients_id);
             } else {
                 if ($patient) {
@@ -70,7 +70,7 @@ class TreatmentController extends Controller
             });
         }
 
-        $treatments = $treatments->orderBy('stocks_sum_amount', 'asc')->paginate(10);
+        $treatments = $treatments->orderBy('stock_sum_amount', 'asc')->paginate(10);
 
         return view('treatments.index', compact('treatments', 'patient'));
     }

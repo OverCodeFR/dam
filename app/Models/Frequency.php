@@ -26,6 +26,4 @@ class Frequency extends Model
     {
         return $this->belongsTo(Treatment::class);
     }
-
-
 }
