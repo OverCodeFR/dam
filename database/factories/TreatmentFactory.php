@@ -30,6 +30,7 @@ class TreatmentFactory extends Factory
             'end_at' => fake()->dateTime(),
             'patient_id' => Patient::factory(),
             'treatment_type_id' => TreatmentType::factory(),
+            'is_done' => false,
         ];
     }
 }

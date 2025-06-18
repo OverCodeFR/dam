@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Treatment;
+use App\Models\TreatmentIntake;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -31,6 +32,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PatientUserSeeder::class);
 
 //        $this->call(PersonalAccessTokenSeeder::class);
+
+        $this->call(TreatmentIntake::class);
 
     }
 }
