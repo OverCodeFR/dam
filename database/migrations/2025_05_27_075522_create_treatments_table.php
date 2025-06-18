@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id()->primary();
             $table->string('name');
             $table->float('dosage');
+            $table->string('unit');
             $table->date('start_at');
             $table->date('end_at');
             $table->foreignIdFor(Patient::class)->constrained()->cascadeOnDelete();
