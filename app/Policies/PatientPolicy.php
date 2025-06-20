@@ -44,6 +44,11 @@ class PatientPolicy
         return $user->role->key !== 'helper';
     }
 
+    public function generateToken(User $user): bool
+    {
+        return $user->role->key === 'admin';
+    }
+
     /**
      * Determine whether the user can delete the model.
      */

@@ -7,6 +7,7 @@ use Livewire\Volt\Volt;
 use \App\Http\Controllers\PatientController;
 use \App\Http\Controllers\TreatmentController;
 use App\Http\Controllers\TreatmentTypeController;
+use App\Livewire\Token;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,8 +19,10 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
+
     //Patients
-    Route::resource('patients', PatientController::class)->except('show');
+    Route::resource('patients', PatientController::class);
+    Route::get('/patients/{patient}/token', \App\Livewire\Token::class)->name('patients.token');
 
     //PatientUser
     Route::resource('patient_user', PatientUserController::class);

@@ -5,7 +5,6 @@
             @foreach ($headers as $header)
                 <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">{{ $header }}</th>
             @endforeach
-            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Actions</th>
         </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
