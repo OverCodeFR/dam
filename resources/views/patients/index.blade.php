@@ -17,7 +17,7 @@
         <div class="mt-8 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <x-table.table :headers="['Nom', 'Téléphone', 'Adresse', 'Email']">
+                    <x-table.table :headers="['Nom', 'Téléphone', 'Adresse', 'Email','Actions','Token']">
                         @foreach($patients as $patient)
                             <tr>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $patient->name }}</td>
@@ -30,6 +30,13 @@
                                     <a href="{{ route('patients.edit',[$patient->id]) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
                                     @endcan
                                 </td>
+                                <td>
+                                    @can('generateToken', \App\Models\Patient::class)
+                                <a href="{{ route('patients.token', $patient) }}" class="text-green-600 hover:text-green-800">
+                                    Générer token
+                                    @endcan
+                                </a>
+                                </td>
                             </tr>
                         @endforeach
                     </x-table.table>
@@ -40,3 +47,5 @@
         </div>
     </div>
 </x-layouts.app>
+
+

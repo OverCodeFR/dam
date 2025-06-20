@@ -71,6 +71,7 @@ class PatientController extends Controller
         return redirect()->route('patients.index');
     }
 
+
     /**
      *
      */
