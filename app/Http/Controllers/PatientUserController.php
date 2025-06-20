@@ -53,6 +53,7 @@ class PatientUserController extends Controller
      */
     public function store(StorePatientUserRequest $request)
     {
+//        dd($request->all());
         Gate::authorize('create', PatientUser::class);
 
         $patient_id = $request->get('patient_id');
@@ -66,9 +67,9 @@ class PatientUserController extends Controller
             })
             ->exists();
 
-        if ($existing) {
-            return redirect()->back()->with('error', 'Patient already assigned to one of the selected users');
-        }
+//        if ($existing) {
+//            return redirect()->back()->with('error', 'Patient already assigned to one of the selected users');
+//        }
 
         if ($healthcare_id) {
             PatientUser::create([

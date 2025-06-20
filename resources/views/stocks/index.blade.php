@@ -22,7 +22,7 @@
 
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $stock->treatment->patient->name }}</td>
                             <td>
-                                <a href="{{ route('treatments.edit',$stock->treatment->id) }}"
+                                <a href="{{ route('stocks.edit',$stock->treatment->id) }}"
                                    class="text-indigo-600 hover:text-indigo-900">Modifier</a>
                             </td>
                         </tr>
