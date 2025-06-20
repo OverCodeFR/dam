@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Treatment;
-use App\Models\TreatmentIntake;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TreatmentTypeSeeder::class);
 
         $this->call(TreatmentSeeder::class);
+
+        $this->call(MomentDaySeeder::class);
 
         $this->call(FrequencySeeder::class);
 

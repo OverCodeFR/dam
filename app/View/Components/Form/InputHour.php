@@ -1,30 +1,29 @@
 <?php
 
-namespace App\View\Components\Form;
+namespace App\View\Components\form;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class MomentDayList extends Component
+class InputHour extends Component
 {
-    public ?string $id;
+    public string $id;
     public string $name;
-    public $options;
-    public $value;
+    public string $label;
+    public ?string $value;
 
     /**
-     * @param string|null $id
+     * @param string $id
      * @param string $name
      * @param string $label
-     * @param $options
-     * @param $value
+     * @param string|null $value
      */
-    public function __construct(?string $id, string $name, $options, $value = null)
+    public function __construct(string $id, string $name, string $label, ?string $value = null)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->options = $options;
+        $this->label = $label;
         $this->value = $value;
     }
 
@@ -34,6 +33,6 @@ class MomentDayList extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.form.moment-day-list');
+        return view('components.form.input-hour');
     }
 }

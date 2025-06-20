@@ -23,9 +23,20 @@ class TreatmentFrequency extends Pivot
      */
     protected $fillable = [
         'amount',
+        'preferred_hour',
+        'moment_day_id',
         'frequency_id',
         'treatment_id',
     ];
+
+    protected $casts = [
+        'preferred_hour' => 'datetime',
+    ];
+
+    public function moment_day(): BelongsTo
+    {
+        return $this->belongsTo(MomentDay::class, 'moment_day_id');
+    }
 
     public function frequencies()
     {
@@ -34,6 +45,6 @@ class TreatmentFrequency extends Pivot
 
     public function treatment(): BelongsTo
     {
-        return $this->belongsTo(Treatment::class);
+        return $this->belongsTo(Treatment::class, 'treatment_id');
     }
 }

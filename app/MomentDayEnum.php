@@ -2,7 +2,7 @@
 
 namespace App;
 
-enum FrequencyMomentDayEnum: string
+enum MomentDayEnum: string
 {
     case MATIN = 'Matin';
     case MIDI = 'Midi';

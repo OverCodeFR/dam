@@ -1,29 +1,30 @@
 <?php
 
-namespace App\View\Components\form;
+namespace App\View\Components\Form;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class InputHourInterval extends Component
+class FrequencyList extends Component
 {
-    public string $id;
+    public ?string $id;
     public string $name;
-    public string $label;
-    public ?string $value;
+    public $options;
+    public $value;
 
     /**
-     * @param string $id
+     * @param string|null $id
      * @param string $name
      * @param string $label
-     * @param string|null $value
+     * @param $options
+     * @param $value
      */
-    public function __construct(string $id, string $name, string $label, ?string $value = null)
+    public function __construct(?string $id, string $name, $options, $value = null)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->label = $label;
+        $this->options = $options;
         $this->value = $value;
     }
 
@@ -33,6 +34,6 @@ class InputHourInterval extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.form.input-hour-interval');
+        return view('components.form.frequency-list');
     }
 }

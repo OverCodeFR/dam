@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Frequency;
+use App\Models\MomentDay;
 use App\Models\Treatment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +21,8 @@ class TreatmentFrequencyFactory extends Factory
     {
         return [
             'amount' => fake()->randomFloat(0,1,5),
+            'preferred_hour' => fake()->time('H:i:s'),
+            'moment_day_id' => MomentDay::factory(),
             'frequency_id' => Frequency::factory(),
             'treatment_id' => Treatment::factory(),
         ];

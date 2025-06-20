@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Frequency;
+use App\Models\MomentDay;
 use App\Models\Treatment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,6 +17,8 @@ return new class extends Migration
         Schema::create('treatment_frequencies', function (Blueprint $table) {
             $table->id()->primary();
             $table->integer('amount');
+            $table->time('preferred_hour');
+            $table->foreignIdFor(MomentDay::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Frequency::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Treatment::class)->constrained()->cascadeOnDelete();
         });

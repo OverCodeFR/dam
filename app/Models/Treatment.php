@@ -28,6 +28,8 @@ class Treatment extends Model
 
     public $timestamps = false;
 
+    protected $with = ['treatment_type', 'treatment_frequencies', 'stock'];
+
     /**
      * Get the attributes that should be cast.
      *

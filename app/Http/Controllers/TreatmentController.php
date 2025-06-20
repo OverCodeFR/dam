@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTreatmentRequest;
 use App\Http\Requests\UpdateTreatmentRequest;
 use App\Models\Frequency;
+use App\Models\MomentDay;
 use App\Models\Stock;
 use App\Models\Treatment;
 use App\Models\Patient;
@@ -81,18 +82,10 @@ class TreatmentController extends Controller
      */
     public function create(Patient $patient)
     {
-        $treatmentTypes = \App\Models\TreatmentType::all();
+        $treatmentTypes = TreatmentType::all();
+        $frequencies = Frequency::all();
 
-        $frequency_getMatin = \App\Models\Frequency::where('moment_day', 'Matin')->get();
-        $frequency_getMidi = \App\Models\Frequency::where('moment_day', 'Midi')->get();
-        $frequency_getApres_midi = \App\Models\Frequency::where('moment_day', 'Après-midi')->get();
-        $frequency_getSoir = \App\Models\Frequency::where('moment_day', 'Soir')->get();
-        $frequency_getNuit = \App\Models\Frequency::where('moment_day', 'Nuit')->get();
-
-        return view('treatments.create', ['treatmentTypes' => $treatmentTypes, 'frequency_getMatin' => $frequency_getMatin,
-                'frequency_getMidi' => $frequency_getMidi, 'frequency_getApres_midi' => $frequency_getApres_midi,
-                'frequency_getSoir' => $frequency_getSoir, 'frequency_getNuit' => $frequency_getNuit]
-            , compact('patient'));
+        return view('treatments.create', compact('treatmentTypes', 'frequencies', 'patient'));
     }
 
 
@@ -107,26 +100,27 @@ class TreatmentController extends Controller
         $treatment = Treatment::create($treatmentData);
         Stock::create(['amount' => 0, 'treatment_id' => $treatment->id]);
 
+        $moment_day_keys = ['MATIN' => 'Matin',
+            'MIDI' => 'Midi', 'APRES_MIDI' => 'Après-midi',
+            'SOIR' => 'Soir', 'NUIT' => 'Nuit'];
 
+        foreach ($moment_day_keys as $key => $value) {
+            if ($request->has($key)) {
+                $amount = "amount_" . $key;
+                $preferred_hour = "preferredHour_" . $key;
 
-        // 2. Liste des moments de la journée à traiter
-        $moment_day_keys = ['MATIN', 'MIDI', 'APRES_MIDI', 'SOIR', 'NUIT'];
+                $amount = $request->input($amount);
+                $preferred_hour = $request->input($preferred_hour);
+                $moment_day = MomentDay::where('moment', $key)->first();
+                $frequency_id = $request->input('frequency_id');
 
-        foreach ($moment_day_keys as $moment_day_key) {
-            if ($request->has($moment_day_key)) {
-                $frequency = "listbox_" . $moment_day_key;
-                $amount = "inputbox_" . $moment_day_key;
-
-                if ($request->filled($frequency) and $request->filled($amount) ) {
-                    $frequencyId = $request->input($frequency);
-                    $amount = $request->input($amount);
-
-                    TreatmentFrequency::create([
-                        'treatment_id' => $treatment->id,
-                        'frequency_id' => $frequencyId,
-                        'amount' => $amount,
-                    ]);
-                }
+                TreatmentFrequency::create([
+                    'amount' => $amount,
+                    'preferred_hour' => $preferred_hour,
+                    'moment_day_id' => $moment_day->id,
+                    'frequency_id' => $frequency_id,
+                    'treatment_id' => $treatment->id,
+                ]);
             }
         }
 
@@ -148,17 +142,10 @@ class TreatmentController extends Controller
      */
     public function edit(Treatment $treatment)
     {
-        $treatmentTypes = \App\Models\TreatmentType::all();
-        $frequency_getMatin = \App\Models\Frequency::where('moment_day', 'Matin')->get();
-        $frequency_getMidi = \App\Models\Frequency::where('moment_day', 'Midi')->get();
-        $frequency_getApres_midi = \App\Models\Frequency::where('moment_day', 'Après-midi')->get();
-        $frequency_getSoir = \App\Models\Frequency::where('moment_day', 'Soir')->get();
-        $frequency_getNuit = \App\Models\Frequency::where('moment_day', 'Nuit')->get();
+        $treatmentTypes = TreatmentType::all();
+        $frequencies = Frequency::all();
 
-        return view('treatments.edit', ['treatmentTypes' => $treatmentTypes, 'frequency_getMatin' => $frequency_getMatin,
-                'frequency_getMidi' => $frequency_getMidi, 'frequency_getApres_midi' => $frequency_getApres_midi,
-                'frequency_getSoir' => $frequency_getSoir, 'frequency_getNuit' => $frequency_getNuit]
-            , compact('treatment'));
+        return view('treatments.edit', compact('treatment', 'treatmentTypes', 'frequencies'));
     }
 
 

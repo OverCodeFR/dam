@@ -1,9 +1,9 @@
-<div class="mb-4 w-full md:w-1/4" id="{{ $id }}">
-    <label for="{{ $name }}" class="block text-sm font-medium text-gray-300 mb-1">
+<div class="mb-4 w-full md:w-1/4 hidden" id="{{ $id }}">
+    <label for="{{ $name }}" class="block text-sm font-medium text-gray-900 mb-1">
         {{ $label }}
     </label>
 
-    <input type="number"
+    <input type="time"
            name="{{ $name }}"
            value="{{ old($name, $value) }}"
            {{ $attributes }}

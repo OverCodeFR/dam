@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\FrequencyEnum;
+use App\MomentDayEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Frequency>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MomentDay>
  */
-class FrequencyFactory extends Factory
+class MomentDayFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,10 +17,10 @@ class FrequencyFactory extends Factory
      */
     public function definition(): array
     {
-        $frequency = fake()->randomElement(FrequencyEnum::cases());
+        $moment_day = fake()->randomElement(MomentDayEnum::cases());
 
         return [
-            'name' => $frequency->value,
+            'moment' => $moment_day->value,
         ];
     }
 }

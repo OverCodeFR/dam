@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Frequency extends Model
+class MomentDay extends Model
 {
     use HasFactory;
 
@@ -16,13 +16,13 @@ class Frequency extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'moment',
     ];
 
     public $timestamps = false;
 
-    public function treatment(): BelongsTo
+    public function treatment_frequencies()
     {
-        return $this->belongsTo(Treatment::class);
+        return $this->hasMany(TreatmentFrequency::class);
     }
 }

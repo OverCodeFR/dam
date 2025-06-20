@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use App\Models\PersonalAccessToken;
 
 class Patient extends Authenticatable
 {
-    use HasFactory, HasApiTokens;
+    use HasFactory, HasApiTokens;//, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -36,17 +34,12 @@ class Patient extends Authenticatable
         return $this->belongsTo(User::class);
     }
 
-//    public function users()
-//    {
-//        return $this->belongsToMany(User::class, 'patient_user');
-//    }
-
     public function patient_users(): HasMany
     {
         return $this->hasMany(PatientUser::class);
     }
 
-    public function treatment(): HasMany
+    public function treatments(): HasMany
     {
         return $this->hasMany(Treatment::class);
     }
