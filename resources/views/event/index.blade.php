@@ -32,8 +32,9 @@
     </style>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let calendarEl = document.getElementById('calendar');
+        function renderCalendar() {
+            const calendarEl = document.getElementById('calendar');
+            if (!calendarEl) return;
 
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -45,17 +46,14 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-
                 eventDataTransform: function(eventData) {
                     return {
                         ...eventData,
-                        color: eventData.end ? '#61ff00' : '#3788d8'
+                        color: eventData.end ? '#ff5733' : '#3788d8'
                     };
                 },
-
                 eventClick: function(info) {
                     info.jsEvent.preventDefault();
-
                     alert(
                         "Titre : " + info.event.title + "\n" +
                         "Description : " + info.event.extendedProps.description + "\n" +
@@ -66,7 +64,11 @@
             });
 
             calendar.render();
-        });
+        }
+
+        document.addEventListener('DOMContentLoaded', renderCalendar);
+
+        document.addEventListener('livewire:navigated', renderCalendar);
     </script>
 
 
