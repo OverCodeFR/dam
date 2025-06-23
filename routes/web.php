@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\PatientUserController;
 use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,12 @@ Route::middleware(['auth'])->group(function () {
 
     //Stocks
     Route::resource('stocks', StockController::class);
+
+    //Calendar
+    Route::get('/events/json', [EventController::class, 'fetchEvents'])->name('events.fetch');
+
+    Route::resource('events', EventController::class);
+
 
 
     //Settings

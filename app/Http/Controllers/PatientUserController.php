@@ -53,37 +53,38 @@ class PatientUserController extends Controller
      */
     public function store(StorePatientUserRequest $request)
     {
-//        dd($request->all());
         Gate::authorize('create', PatientUser::class);
 
         $patient_id = $request->get('patient_id');
         $healthcare_id = $request->get('healthcare_id');
         $helper_id = $request->get('helper_id');
 
-        $existing = PatientUser::where('patient_id', $patient_id)
-            ->where(function ($query) use ($healthcare_id, $helper_id) {
-                $query->where('user_id', $healthcare_id)
-                    ->orWhere('user_id', $helper_id);
-            })
-            ->exists();
-
-//        if ($existing) {
-//            return redirect()->back()->with('error', 'Patient already assigned to one of the selected users');
-//        }
-
         if ($healthcare_id) {
-            PatientUser::create([
-                'patient_id' => $patient_id,
-                'user_id' => $healthcare_id,
-            ]);
+            $existingHealthcare = PatientUser::where('patient_id', $patient_id)
+                ->where('user_id', $healthcare_id)
+                ->exists();
+
+            if (!$existingHealthcare) {
+                PatientUser::create([
+                    'patient_id' => $patient_id,
+                    'user_id' => $healthcare_id,
+                ]);
+            }
         }
 
         if ($helper_id) {
-            PatientUser::create([
-                'patient_id' => $patient_id,
-                'user_id' => $helper_id,
-            ]);
+            $existingHelper = PatientUser::where('patient_id', $patient_id)
+                ->where('user_id', $helper_id)
+                ->exists();
+
+            if (!$existingHelper) {
+                PatientUser::create([
+                    'patient_id' => $patient_id,
+                    'user_id' => $helper_id,
+                ]);
+            }
         }
+
 
         return redirect()->back()->with('success', 'Patient assigned successfully.');
     }

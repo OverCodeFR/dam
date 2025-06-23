@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\TreatmentController;
+use App\Http\Controllers\EventController;
 use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
