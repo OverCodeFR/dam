@@ -26,9 +26,9 @@ class PatientController extends Controller
         if ($user->role->key === 'admin') {
             $patients = Patient::query();
         } else {
-            $patients = Patient::whereHas('users', function ($q) use ($user) {
-                $q->where('user_id', $user->id);
-            });
+            $patients_id = PatientUser::where('user_id', $user->id)
+                ->pluck('patient_id');
+            $patients = Patient::whereIn('id', $patients_id);
         }
 
         $patients = $patients->when($search, function ($query, $search) {

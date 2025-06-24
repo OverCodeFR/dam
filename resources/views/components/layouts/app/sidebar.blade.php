@@ -27,7 +27,9 @@
                     @can('create', App\Models\PatientUser::class)
                         <flux:navlist.item icon="user" :href="route('patient_user.create')" wire:navigate>{{ __('Assignation de patient') }}</flux:navlist.item>
                     @endcan
+                    @can('viewAny_nav', \App\Models\Event::class)
                     <flux:navlist.item icon="calendar" :href="route('events.index')" wire:navigate>{{ __('Calendrier des prises') }}</flux:navlist.item>
+                    @endcan
                 </flux:navlist.group>
             </flux:navlist>
 

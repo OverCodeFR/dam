@@ -48,6 +48,16 @@ class Treatment extends Model
         return $this->belongsTo(Patient::class);
     }
 
+    public function frequencies()
+    {
+        return $this->hasMany(TreatmentFrequency::class);
+    }
+
+    public function intakes()
+    {
+        return $this->hasMany(TreatmentIntake::class);
+    }
+
     public function treatment_type(): BelongsTo
     {
         return $this->belongsTo(TreatmentType::class);

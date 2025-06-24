@@ -25,4 +25,9 @@ class Frequency extends Model
     {
         return $this->belongsTo(Treatment::class);
     }
+
+    public function treatment_frequencies()
+    {
+        return $this->hasMany(TreatmentFrequency::class);
+    }
 }

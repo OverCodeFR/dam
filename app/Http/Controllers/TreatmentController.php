@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTreatmentRequest;
 use App\Http\Requests\UpdateTreatmentRequest;
 use App\Models\Frequency;
 use App\Models\MomentDay;
+use App\Models\PatientUser;
 use App\Models\Stock;
 use App\Models\Treatment;
 use App\Models\Patient;
@@ -42,8 +43,10 @@ class TreatmentController extends Controller
             }
         } else {
             if (!\Illuminate\Support\Facades\Request::is('treatments/*')) {
-                $patients_id = $user->patient()->pluck('patients.id');
-                $treatments->whereIn('patient_id', $patients_id);
+                $patients_id = PatientUser::where('user_id', $user->id)
+                    ->pluck('patient_id');
+                Patient::whereIn('id', $patients_id);
+
             } else {
                 if ($patient) {
                     $treatments->where('patient_id', $patient->id);

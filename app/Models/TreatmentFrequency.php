@@ -38,13 +38,13 @@ class TreatmentFrequency extends Pivot
         return $this->belongsTo(MomentDay::class, 'moment_day_id');
     }
 
-    public function frequencies()
+    public function frequency()
     {
-        return $this->belongsTo(Frequency::class, 'frequency_id');
+        return $this->belongsTo(Frequency::class);
     }
 
     public function treatment(): BelongsTo
     {
-        return $this->belongsTo(Treatment::class, 'treatment_id');
+        return $this->belongsTo(Treatment::class);
     }
 }
