@@ -34,9 +34,9 @@ class PatientUserController extends Controller
             $healthcare = User::where('role_id', 2)->get();
             $helper = User::where('role_id', 3)->get();
         } elseif ($user->role->key === 'healthcare') {
-            $patients = PatientUser::with('patient')
-                ->where('user_id', $user->id)
-                ->get();
+            $patients_id = PatientUser::where('user_id', $user->id)
+                ->pluck('patient_id');
+            $patients = Patient::whereIn('id', $patients_id)->get();
             $healthcare = null;
             $helper = User::where('role_id', 3)->get();
         } else {

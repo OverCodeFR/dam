@@ -13,6 +13,7 @@ Route::middleware('auth:sanctum')->get('/users', function (Request $request) {
 });
 
 Route::get('/patients', function () {return Patient::all();});
+
 Route::get('/token/generate', function () {$token = User::find(4)->createToken('api_token')->plainTextToken;
     Log::info($token);});
 

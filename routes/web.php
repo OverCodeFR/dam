@@ -39,11 +39,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('stocks', StockController::class);
 
     //Calendar
-    Route::get('/events/json', [EventController::class, 'fetchEvents'])->name('events.fetch');
-
+    Route::get('/events/fetch', [EventController::class, 'fetch'])->name('events.fetch');
     Route::resource('events', EventController::class);
-
-
 
     //Settings
     Route::redirect('settings', 'settings/profile');

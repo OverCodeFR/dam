@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Patient;
+use App\Models\PatientUser;
 use App\Models\User;
 
 class PatientPolicy
@@ -36,7 +37,7 @@ class PatientPolicy
      */
     public function update(User $user, Patient $patient): bool
     {
-        return $user->role->key === 'admin' || $patient->user_id === $user->id || $patient->users->contains($user->id);
+        return $user->role->key === 'admin' || PatientUser::where('patient_id', $patient->id)->where('user_id', $user->id)->exists();
     }
 
     public function showButton(User $user): bool

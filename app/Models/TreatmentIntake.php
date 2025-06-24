@@ -25,6 +25,10 @@ class TreatmentIntake extends Model
         'treatment_id',
     ];
 
+    protected $casts = [
+        'taken_at' => 'datetime',
+    ];
+
     public $timestamps = false;
 
     public function patient(): BelongsTo

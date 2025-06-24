@@ -2,28 +2,38 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Event extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'title',
+        'start_time',
+        'end_time',
         'description',
-        'preferred_hour',
-        'taken_at',
-        'treatment_id'
+        'patient_id',
+        'treatment_id',
+        'isDone',
+    ];
+
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+        'isDone' => 'boolean',
     ];
 
     public $timestamps = false;
 
-    protected $casts = [
-        'preferred_hour' => 'datetime:Y-m-d\TH:i:s',
-        'taken_at' => 'datetime:Y-m-d\TH:i:s',
-    ];
-
-    public function treatment(): BelongsTo
+    public function treatment()
     {
         return $this->belongsTo(Treatment::class);
+    }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
     }
 }
