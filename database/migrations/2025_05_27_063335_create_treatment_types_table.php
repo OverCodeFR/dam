@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('treatment_types', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->string('name');
             $table->enum('module', array_column(\App\TreatmentTypeModuleEnum::cases(), 'value'));
         });

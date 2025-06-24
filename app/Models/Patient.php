@@ -46,7 +46,7 @@ class Patient extends Authenticatable
         return $this->hasMany(PatientUser::class);
     }
 
-    public function treatment(): HasMany
+    public function treatments(): HasMany
     {
         return $this->hasMany(Treatment::class);
     }

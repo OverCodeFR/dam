@@ -15,7 +15,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('treatment_frequencies', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->integer('amount');
             $table->time('preferred_hour');
             $table->foreignIdFor(MomentDay::class)->constrained()->cascadeOnDelete();

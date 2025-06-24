@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stocks', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->float('amount');
             $table->foreignIdFor(Treatment::class)->constrained()->cascadeOnDelete();
         });

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('moment_days', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->string('moment');
         });
     }

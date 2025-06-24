@@ -26,6 +26,7 @@ class TreatmentFactory extends Factory
         return [
             'name' => fake()->name(),
             'dosage' => fake()->randomFloat(2,1,250),
+            'unit' => $this->faker->randomElement(['mg', 'g', 'mL', 'µg']),
             'start_at' => fake()->dateTime(),
             'end_at' => fake()->dateTime(),
             'patient_id' => Patient::factory(),

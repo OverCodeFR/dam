@@ -18,6 +18,7 @@ class TreatmentResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'dosage' => $this->dosage,
+            'unit' => $this->unit,
             'start_at' =>$this->start_at,
             'end_at' => $this->end_at,
             'is_done' => $this->is_done,
