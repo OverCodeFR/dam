@@ -8,7 +8,7 @@ it('patient has treatments', function () {
         ->has(Treatment::factory()->count(1))
         ->create();
 
-    $patient->load('treatments'); // Charge explicitement la relation
+    $patient->load('treatments');
 
     expect($patient->treatments)->toHaveCount(1);
 });
@@ -20,7 +20,7 @@ it('treatment belongs to a patient', function () {
     expect($treatment->patient)->toBeInstanceOf(Patient::class);
 });
 
-it('patient can have zero treatments', function () {
+it('patient have zero treatments', function () {
     $patient = Patient::factory()->create();
 
     expect($patient->treatments)->toBeEmpty();
@@ -47,6 +47,8 @@ it('deletes treatments when patient deleted', function () {
 
     expect(Treatment::where('patient_id', $patientId)->count())->toBe(0);
 });
+
+
 
 
 
