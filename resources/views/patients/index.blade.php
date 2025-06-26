@@ -28,7 +28,7 @@
                                     <a href="{{ route('events.index', ['patient' => $patient->id]) }}" class="text-indigo-600 hover:text-indigo-900">Calendrier des prises</a><br>
                                     <a href="{{ route('treatments.index', ['patient' => $patient->id]) }}" class="text-indigo-600 hover:text-indigo-900">Traitements</a><br>
                                     @can('update', $patient)
-                                    <a href="{{ route('patients.edit',[$patient->id]) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
+                                        <a href="{{ route('patients.edit',[$patient->id]) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
                                     @endcan
                                 </td>
                                 <td>

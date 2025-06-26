@@ -10,6 +10,20 @@ use Illuminate\Http\Request;
 
 class TreatmentController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/patients/treatments",
+     *     tags={"Traitements"},
+     *     summary="Lister les traitements",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Liste des traitements"
+     *     )
+     * )
+     */
+
+
     public function getTreatments(Request $request) {
         $patient = Patient::findOrFail($request->user()->id);
 

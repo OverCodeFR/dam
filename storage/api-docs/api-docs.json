@@ -1,0 +1,49 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/api/patients/treatments": {
+            "get": {
+                "tags": [
+                    "Traitements"
+                ],
+                "summary": "Lister les traitements",
+                "operationId": "41faf6f487672872d95f51a5fa18a924",
+                "responses": {
+                    "200": {
+                        "description": "Liste des traitements"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Traitements",
+            "description": "Traitements"
+        }
+    ]
+}

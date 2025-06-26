@@ -16,12 +16,9 @@ class TreatmentFrequencyResource extends JsonResource
     {
         return [
             'amount' => $this->amount,
-            'frequencies' => $this->whenLoaded('frequencies', function () {
-                return [
-                    'moment_day' => $this->frequencies->moment_day,
-                    'hour' => $this->frequencies->hour,
-                ];
-            }),
+            'preferred_hour' => $this->preferred_hour,
+            'moment_day' => $this->moment_day->makeHidden('id'),
+            'frequency' => $this->frequency->makeHidden('id'),
         ];
     }
 }

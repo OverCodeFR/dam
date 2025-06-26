@@ -37,7 +37,8 @@ class PatientPolicy
      */
     public function update(User $user, Patient $patient): bool
     {
-        return $user->role->key === 'admin' || PatientUser::where('patient_id', $patient->id)->where('user_id', $user->id)->exists();
+        return $user->role->key === 'admin' || PatientUser::where('patient_id', $patient->id)
+                ->where('user_id', $user->id)->exists();
     }
 
     public function showButton(User $user): bool
