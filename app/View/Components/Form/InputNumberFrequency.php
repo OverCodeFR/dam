@@ -30,3 +30,4 @@ class InputNumberFrequency extends Component
         return view('components.form.input-number-frequency', []);
     }
 }
+

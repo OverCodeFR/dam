@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
+use App\Models\Frequency;
 use App\Models\Patient;
+use App\Models\Treatment;
 use App\Models\TreatmentFrequency;
 use App\Models\TreatmentIntake;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -22,40 +23,120 @@ class EventController extends Controller
 
     public function fetch(Request $request)
     {
-        $patient = Patient::findOrFail ($request->input('patient'));
-
+        $patient = Patient::findOrFail($request->input('patient'));
         $now = now();
 
-        $events = Event::where('patient_id', $patient->id)
-            ->where('isDone', false)
-            ->get()
-            ->map(function ($event) {
-                return [
-                    'title' => 'À prendre : ' . $event->title,
-                    'start' => $event->start_time->toIso8601String(),
-                    'end' => $event->end_time?->toIso8601String(),
-                    'description' => $event->description,
-                    'color' => '#28a745',
-                ];
-            });
+        $treatments = Treatment::where('patient_id', $patient->id)
+            ->whereDate('start_at', '<=', $now)
+            ->whereDate('end_at', '>=', $now)
+            ->get();
 
-        $intakes = TreatmentIntake::with('treatment')
-            ->where('patient_id', $patient->id)
-            ->where('taken_at', '<', $now)
-            ->get()
-            ->map(function ($intake) {
-                $takenAt = \Carbon\Carbon::parse($intake->taken_at);
-                return [
-                    'title' => 'Pris : ' . $intake->treatment->name,
-                    'start' => $takenAt->toIso8601String(),
-                    'end' => $takenAt->copy()->addMinutes(10)->toIso8601String(),
-                    'description' => 'Quantité : ' . $intake->amount,
-                    'color' => '#dc3545',
-                ];
-            });
+        $events = collect();
 
-        return response()->json($events->merge($intakes));
+        $intakes = TreatmentIntake::where('patient_id', $patient->id)->get();
+
+        foreach ($treatments as $treatment) {
+            $frequencies = TreatmentFrequency::where('treatment_id', $treatment->id)->get();
+
+            foreach ($frequencies as $frequency) {
+                $frequencyModel = Frequency::find($frequency->frequency_id);
+
+                if (!$frequencyModel) continue;
+
+                $dates = $this->generateDates(
+                    $treatment->start_at,
+                    $treatment->end_at,
+                    $frequencyModel->name
+                );
+
+                foreach ($dates as $date) {
+                    $hour = trim($frequency->preferred_hour);
+                    if (preg_match('/\d{2}:\d{2}(:\d{2})?/', $hour, $matches)) {
+                        $hour = $matches[0];
+                    } else {
+                        $hour = '08:00:00';
+                    }
+
+                    $start = Carbon::parse($date . ' ' . $hour);
+                    $end = $start->copy()->addMinutes(90);
+
+                    $matchingIntake = $intakes->first(function ($intake) use ($start, $end, $treatment) {
+                        return
+                            $intake->treatment_id === $treatment->id &&
+                            Carbon::parse($intake->taken_at)->between($start, $end);
+                    });
+
+                    if ($start->isPast()) {
+                        if ($matchingIntake) {
+                            continue;
+                        } else {
+                            $events->push([
+                                'title' => 'Oublié : ' . $treatment->name,
+                                'start' => $start->toIso8601String(),
+                                'end' => $end->toIso8601String(),
+                                'description' => 'Dosage : ' . $treatment->dosage . ' ' . $treatment->unit,
+                                'color' => '#dc3545',
+                            ]);
+                        }
+                    } else {
+                        $events->push([
+                            'title' => 'À prendre : ' . $treatment->name,
+                            'start' => $start->toIso8601String(),
+                            'end' => $end->toIso8601String(),
+                            'description' => 'Dosage : ' . $treatment->dosage . ' ' . $treatment->unit,
+                            'color' => '#00cdff',
+                        ]);
+                    }
+                }
+            }
+        }
+
+        $takenEvents = $intakes->map(function ($intake) {
+            $takenAt = Carbon::parse($intake->taken_at);
+            return [
+                'title' => 'Pris : ' . $intake->treatment->name,
+                'start' => $takenAt->toIso8601String(),
+                'end' => $takenAt->copy()->addMinutes(75)->toIso8601String(),
+                'description' => 'Quantité : ' . $intake->amount,
+                'color' => '#28a745',
+            ];
+        });
+
+        return response()->json($events->merge($takenEvents));
     }
+
+    private function generateDates($startDate, $endDate, $frequency)
+    {
+        $start = Carbon::parse($startDate)->startOfDay();
+        $end = $endDate ? Carbon::parse($endDate)->endOfDay() : now()->addMonths(1)->endOfDay();
+
+        $dates = [];
+
+        while ($start <= $end) {
+            $dates[] = $start->toDateString();
+
+            switch (strtolower(trim($frequency))) {
+                case 'quotidien':
+                case 'daily':
+                    $start->addDay();
+                    break;
+                case 'hebdomadaire':
+                case 'weekly':
+                    $start->addWeek();
+                    break;
+                case 'mensuel':
+                case 'monthly':
+                    $start->addMonth();
+                    break;
+                default:
+                    $start->addDay();
+                    break;
+            }
+        }
+
+        return $dates;
+    }
+
 
     /**
      * Show the form for creating a new resource.

@@ -114,7 +114,7 @@ class TreatmentController extends Controller
 
                 $amount = $request->input($amount);
                 $preferred_hour = $request->input($preferred_hour);
-                $moment_day = MomentDay::where('moment', $key)->first();
+                $moment_day = MomentDay::where('moment', $value)->first();
                 $frequency_id = $request->input('frequency_id');
 
                 TreatmentFrequency::create([
